@@ -1,0 +1,23 @@
+/* components/AnimatedText.module.css */
+.animatedText {
+  display: inline-block;
+  position: relative;
+}
+
+.cursor {
+  display: inline-block;
+  width: 3px;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+  color: #667eea;
+  font-weight: 400;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
