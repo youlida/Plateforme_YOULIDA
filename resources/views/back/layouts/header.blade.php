@@ -1,4 +1,4 @@
-<div class="admin-header">
+{{-- <div class="admin-header">
     <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
         <div>
             <h1 class="page-title">@yield('page-title', 'Tableau de bord')</h1>
@@ -11,4 +11,4 @@
             </button>
         </div>
     </div>
-</div>
+</div> --}}

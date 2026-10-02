@@ -16,6 +16,7 @@ class User extends Authenticatable
         'prenom',
         'email',
         'telephone',
+        'photo',
         'ip_address',
         'pays',
         'ville',
@@ -55,12 +56,12 @@ class User extends Authenticatable
         return $this->role?->slug === 'superadmin';
     }
     public function articles()
-{
-    return $this->hasMany(Article::class);
-}
+    {
+        return $this->hasMany(Article::class);
+    }
 
-public function historiques()
-{
-    return $this->hasMany(Historique::class);
-}
+    public function historiques()
+    {
+        return $this->hasMany(Historique::class);
+    }
 }

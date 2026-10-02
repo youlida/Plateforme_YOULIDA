@@ -1,109 +1,464 @@
 @extends('back.layouts.app')
 
-@section('title','Rôles')
+@section('title', 'Gestion des rôles')
 
 @section('content')
 
-<div class="container-fluid">
+<div class="container-fluid py-4">
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-<h4>Gestion des rôles</h4>
+    {{-- =========================================================
+        EN-TÊTE
+    ========================================================== --}}
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
 
-<a href="{{ route('admin.roles.create') }}" class="btn btn-primary">
-Ajouter un rôle
-</a>
-</div>
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <div
+                    class="d-flex align-items-center justify-content-center rounded-3 bg-primary bg-opacity-10 text-primary"
+                    style="width: 44px; height: 44px;"
+                >
+                    <i class="bi bi-shield-lock fs-5"></i>
+                </div>
 
-@if(session('success'))
-<div class="alert alert-success">
-{{ session('success') }}
-</div>
-@endif
+                <div>
+                    <h3 class="fw-bold mb-0">
+                        Gestion des rôles
+                    </h3>
 
-@if(session('error'))
-<div class="alert alert-danger">
-{{ session('error') }}
-</div>
-@endif
+                    <p class="text-muted mb-0 small">
+                        Gérez les rôles et les niveaux d'accès des utilisateurs de YOULIDA.
+                    </p>
+                </div>
+            </div>
+        </div>
 
-<div class="card">
-<div class="card-body table-responsive">
+        <a
+            href="{{ route('admin.roles.create') }}"
+            class="btn btn-primary d-inline-flex align-items-center gap-2 px-3"
+        >
+            <i class="bi bi-plus-lg"></i>
+            Ajouter un rôle
+        </a>
 
-<table class="table table-bordered">
+    </div>
 
-<thead>
-<tr>
-<th>ID</th>
-<th>Nom</th>
-<th>Slug</th>
-<th>Description</th>
-<th>Date</th>
-<th width="200">Actions</th>
-</tr>
-</thead>
 
-<tbody>
+    {{-- =========================================================
+        MESSAGES
+    ========================================================== --}}
 
-@forelse($roles as $role)
+    @if(session('success'))
 
-<tr>
+        <div
+            class="alert alert-success alert-dismissible fade show border-0 shadow-sm"
+            role="alert"
+        >
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-check-circle-fill"></i>
 
-<td>{{ $role->id }}</td>
+                <span>
+                    {{ session('success') }}
+                </span>
+            </div>
 
-<td>{{ $role->name }}</td>
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Fermer"
+            ></button>
+        </div>
 
-<td>{{ $role->slug }}</td>
+    @endif
 
-<td>{{ $role->description }}</td>
 
-<td>{{ $role->created_at->format('d/m/Y') }}</td>
+    @if(session('error'))
 
-<td>
+        <div
+            class="alert alert-danger alert-dismissible fade show border-0 shadow-sm"
+            role="alert"
+        >
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-exclamation-triangle-fill"></i>
 
-<a href="{{ route('admin.roles.show',$role->id) }}"
-class="btn btn-info btn-sm">
-Voir
-</a>
+                <span>
+                    {{ session('error') }}
+                </span>
+            </div>
 
-<a href="{{ route('admin.roles.edit',$role->id) }}"
-class="btn btn-warning btn-sm">
-Modifier
-</a>
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Fermer"
+            ></button>
+        </div>
 
-<form action="{{ route('admin.roles.destroy',$role->id) }}"
-method="POST"
-style="display:inline">
+    @endif
 
-@csrf
-@method('DELETE')
 
-<button class="btn btn-danger btn-sm"
-onclick="return confirm('Supprimer ce rôle ?')">
-Supprimer
-</button>
+    {{-- =========================================================
+        CARTE STATISTIQUE
+    ========================================================== --}}
 
-</form>
+    <div class="row g-3 mb-4">
 
-</td>
+        <div class="col-12 col-sm-6 col-xl-3">
 
-</tr>
+            <div class="card border-0 shadow-sm h-100">
 
-@empty
+                <div class="card-body d-flex align-items-center justify-content-between">
 
-<tr>
-<td colspan="6">Aucun rôle trouvé</td>
-</tr>
+                    <div>
+                        <p class="text-muted small mb-1">
+                            Total des rôles
+                        </p>
 
-@endforelse
+                        <h3 class="fw-bold mb-0">
+                            {{ $roles->total() }}
+                        </h3>
+                    </div>
 
-</tbody>
+                    <div
+                        class="d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary"
+                        style="width: 52px; height: 52px;"
+                    >
+                        <i class="bi bi-shield-check fs-4"></i>
+                    </div>
 
-</table>
+                </div>
 
-{{ $roles->links() }}
+            </div>
 
-</div>
-</div>
+        </div>
+
+    </div>
+
+
+    {{-- =========================================================
+        TABLEAU
+    ========================================================== --}}
+
+    <div class="card border-0 shadow-sm">
+
+        {{-- HEADER CARTE --}}
+        <div class="card-header bg-white border-bottom py-3">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h5 class="fw-bold mb-1">
+                        Liste des rôles
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Rôles actuellement disponibles dans la plateforme.
+                    </p>
+                </div>
+
+                <span class="badge bg-light text-dark border px-3 py-2">
+                    {{ $roles->total() }}
+                    {{ $roles->total() > 1 ? 'rôles' : 'rôle' }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th class="ps-4 py-3">
+                                #
+                            </th>
+
+                            <th class="py-3">
+                                Rôle
+                            </th>
+
+                            <th class="py-3">
+                                Slug
+                            </th>
+
+                            <th class="py-3">
+                                Description
+                            </th>
+
+                            <th class="py-3">
+                                Création
+                            </th>
+
+                            <th class="py-3 text-end pe-4">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        @forelse($roles as $role)
+
+                            <tr>
+
+                                {{-- ID --}}
+                                <td class="ps-4">
+
+                                    <span class="text-muted fw-semibold">
+                                        #{{ $role->id }}
+                                    </span>
+
+                                </td>
+
+
+                                {{-- RÔLE --}}
+                                <td>
+
+                                    <div class="d-flex align-items-center gap-3">
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary flex-shrink-0"
+                                            style="width: 42px; height: 42px;"
+                                        >
+                                            <i class="bi bi-person-lock"></i>
+                                        </div>
+
+                                        <div>
+
+                                            <div class="fw-bold text-dark">
+                                                {{ $role->name }}
+                                            </div>
+
+                                            @if(in_array($role->slug, ['admin', 'superadmin']))
+
+                                                <span class="badge bg-success bg-opacity-10 text-success mt-1">
+                                                    Administration
+                                                </span>
+
+                                            @endif
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                {{-- SLUG --}}
+                                <td>
+
+                                    <code
+                                        class="px-2 py-1 rounded bg-light text-primary border"
+                                    >
+                                        {{ $role->slug }}
+                                    </code>
+
+                                </td>
+
+
+                                {{-- DESCRIPTION --}}
+                                <td style="max-width: 320px;">
+
+                                    @if($role->description)
+
+                                        <span class="text-muted">
+                                            {{ \Illuminate\Support\Str::limit($role->description, 80) }}
+                                        </span>
+
+                                    @else
+
+                                        <span class="text-muted fst-italic">
+                                            Aucune description
+                                        </span>
+
+                                    @endif
+
+                                </td>
+
+
+                                {{-- DATE --}}
+                                <td>
+
+                                    <div class="d-flex flex-column">
+
+                                        <span class="fw-semibold">
+                                            {{ $role->created_at->format('d/m/Y') }}
+                                        </span>
+
+                                        <small class="text-muted">
+                                            {{ $role->created_at->format('H:i') }}
+                                        </small>
+
+                                    </div>
+
+                                </td>
+
+
+                                {{-- ACTIONS --}}
+                                <td class="text-end pe-4">
+
+                                    <div
+                                        class="d-inline-flex align-items-center gap-1"
+                                    >
+
+                                        {{-- VOIR --}}
+                                        <a
+                                            href="{{ route('admin.roles.show', $role->id) }}"
+                                            class="btn btn-sm btn-light border"
+                                            title="Voir"
+                                        >
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+
+
+                                        {{-- MODIFIER --}}
+                                        <a
+                                            href="{{ route('admin.roles.edit', $role->id) }}"
+                                            class="btn btn-sm btn-light border"
+                                            title="Modifier"
+                                        >
+                                            <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                        </a>
+
+
+                                        {{-- SUPPRIMER --}}
+                                        <form
+                                            action="{{ route('admin.roles.destroy', $role->id) }}"
+                                            method="POST"
+                                            class="d-inline"
+                                            onsubmit="return confirm(
+                                                'Voulez-vous vraiment supprimer le rôle « {{ addslashes($role->name) }} » ?'
+                                            );"
+                                        >
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                type="submit"
+                                                class="btn btn-sm btn-light border"
+                                                title="Supprimer"
+                                            >
+                                                <i class="fa-solid fa-trash text-danger"></i>
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            {{-- ÉTAT VIDE --}}
+                            <tr>
+
+                                <td
+                                    colspan="6"
+                                    class="text-center py-5"
+                                >
+
+                                    <div class="py-4">
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center rounded-circle bg-light mx-auto mb-3"
+                                            style="width: 70px; height: 70px;"
+                                        >
+                                            <i class="bi bi-shield-x fs-2 text-muted"></i>
+                                        </div>
+
+                                        <h5 class="fw-bold">
+                                            Aucun rôle trouvé
+                                        </h5>
+
+                                        <p class="text-muted mb-3">
+                                            Aucun rôle n'a encore été enregistré.
+                                        </p>
+
+                                        <a
+                                            href="{{ route('admin.roles.create') }}"
+                                            class="btn btn-primary btn-sm"
+                                        >
+                                            <i class="bi bi-plus-lg me-1"></i>
+
+                                            Ajouter un rôle
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        {{-- =====================================================
+            PAGINATION
+        ====================================================== --}}
+
+        @if($roles->hasPages())
+
+            <div class="card-footer bg-white border-top py-3">
+
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+
+                    <small class="text-muted">
+
+                        Affichage de
+
+                        <strong>
+                            {{ $roles->firstItem() }}
+                        </strong>
+
+                        à
+
+                        <strong>
+                            {{ $roles->lastItem() }}
+                        </strong>
+
+                        sur
+
+                        <strong>
+                            {{ $roles->total() }}
+                        </strong>
+
+                        rôles
+
+                    </small>
+
+
+                    <div>
+                        {{ $roles->links() }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        @endif
+
+    </div>
 
 </div>
 

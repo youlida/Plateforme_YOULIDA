@@ -1,0 +1,2009 @@
+/* =========================================================
+   YOULIDA - CALL TO ACTION PAGE
+   ========================================================= */
+
+.cta-page {
+    width: 100%;
+    min-height: 100vh;
+    font-family: "Poppins", Arial, sans-serif;
+    color: #1f2937;
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.cta-hero {
+    position: relative;
+    padding: 110px 20px 100px;
+    background: linear-gradient(135deg,
+            #f4f8ff 0%,
+            #ffffff 50%,
+            #fff7f1 100%);
+    overflow: hidden;
+}
+
+.cta-hero::before {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: rgba(232, 99, 26, 0.08);
+    top: -180px;
+    right: -100px;
+}
+
+.cta-hero::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(30, 64, 175, 0.06);
+    bottom: -150px;
+    left: -100px;
+}
+
+.cta-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 850px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cta-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 18px;
+    margin-bottom: 20px;
+    border-radius: 50px;
+    background: #fff1e8;
+    color: #e8631a;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.cta-hero h1 {
+    margin: 0 0 22px;
+    color: #111827;
+    font-size: 3.5rem;
+    line-height: 1.15;
+    font-weight: 800;
+}
+
+.cta-hero h1 span {
+    color: #e8631a;
+}
+
+.cta-hero p {
+    max-width: 720px;
+    margin: 0 auto;
+    color: #6b7280;
+    font-size: 1.15rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.cta-paths {
+    padding: 100px 20px;
+    background: #ffffff;
+}
+
+.cta-section-header {
+    max-width: 750px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.cta-section-label {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #e8631a;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.cta-section-header h2 {
+    margin: 0 0 15px;
+    color: #111827;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    font-weight: 750;
+}
+
+.cta-section-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   3 PARCOURS
+   ========================================================= */
+
+.cta-paths-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.cta-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 35px;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.cta-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.1);
+}
+
+.cta-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+}
+
+
+/* Couleurs des cartes */
+
+.cta-card-youth::before {
+    background: #e8631a;
+}
+
+.cta-card-partner::before {
+    background: #2563eb;
+}
+
+.cta-card-intervention::before {
+    background: #16a34a;
+}
+
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.cta-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    margin-bottom: 20px;
+    border-radius: 18px;
+}
+
+.cta-card-youth .cta-card-icon {
+    color: #e8631a;
+    background: #fff1e8;
+}
+
+.cta-card-partner .cta-card-icon {
+    color: #2563eb;
+    background: #eff6ff;
+}
+
+.cta-card-intervention .cta-card-icon {
+    color: #16a34a;
+    background: #f0fdf4;
+}
+
+
+/* =========================================================
+   NUMÉRO
+   ========================================================= */
+
+.cta-card-number {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    color: #e5e7eb;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   TITRES
+   ========================================================= */
+
+.cta-card h3 {
+    margin: 0 0 8px;
+    padding-right: 35px;
+    color: #111827;
+    font-size: 1.55rem;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.cta-card-subtitle {
+    margin: 0 0 18px;
+    color: #e8631a;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.cta-card-partner .cta-card-subtitle {
+    color: #2563eb;
+}
+
+.cta-card-intervention .cta-card-subtitle {
+    color: #16a34a;
+}
+
+.cta-card>p:not(.cta-card-subtitle) {
+    margin: 0 0 25px;
+    color: #6b7280;
+    font-size: 0.98rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   ACTIONS CONTACT
+   ========================================================= */
+
+.cta-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.cta-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.cta-action.primary {
+    color: #ffffff;
+    background: #e8631a;
+}
+
+.cta-action.primary:hover {
+    background: #d65310;
+    transform: translateY(-2px);
+}
+
+.cta-action.secondary {
+    color: #374151;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+}
+
+.cta-action.secondary:hover {
+    color: #e8631a;
+    border-color: #e8631a;
+    background: #fff7f2;
+}
+
+
+/* =========================================================
+   BOUTONS / LIENS DES CARTES
+   ========================================================= */
+
+.cta-card-link,
+.cta-card-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: 100%;
+    min-height: 48px;
+    margin-top: 18px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.cta-card-link {
+    color: #e8631a;
+    background: transparent;
+    border: 1px solid #fed7aa;
+}
+
+.cta-card-link:hover {
+    color: #ffffff;
+    background: #e8631a;
+    border-color: #e8631a;
+}
+
+.cta-card-button {
+    color: #ffffff;
+    border: none;
+}
+
+.cta-card-partner .cta-card-button {
+    background: #2563eb;
+}
+
+.cta-card-partner .cta-card-button:hover {
+    background: #1d4ed8;
+}
+
+.cta-card-intervention .cta-card-button {
+    background: #16a34a;
+}
+
+.cta-card-intervention .cta-card-button:hover {
+    background: #15803d;
+}
+
+
+/* =========================================================
+   TAGS
+   ========================================================= */
+
+.cta-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.cta-card-tags span {
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #f3f4f6;
+    color: #4b5563;
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   AUTRES FAÇONS DE SOUTENIR
+   ========================================================= */
+
+.cta-support {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 55px 50px;
+    border-radius: 28px;
+    background: #f9fafb;
+}
+
+.cta-support-content {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.cta-support-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    color: #e8631a;
+    background: #fff1e8;
+}
+
+.cta-support-content h2 {
+    margin: 0 0 8px;
+    color: #111827;
+    font-size: 1.5rem;
+}
+
+.cta-support-content p {
+    margin: 0;
+    color: #6b7280;
+}
+
+.cta-support-actions {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.cta-support-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 11px 20px;
+    border-radius: 10px;
+    color: #ffffff;
+    background: #e8631a;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.cta-support-button:hover {
+    background: #d65310;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   SECTION FINALE
+   ========================================================= */
+
+.cta-final {
+    margin-top: 100px;
+    padding: 90px 20px;
+    background: linear-gradient(135deg,
+            #1a1a1a 0%,
+            #242424 100%);
+    color: #ffffff;
+    text-align: center;
+}
+
+.cta-final-content {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.cta-final h2 {
+    margin: 0 0 18px;
+    font-size: 2.4rem;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.cta-final p {
+    margin: 0;
+    color: #d1d5db;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   RESPONSIVE TABLETTE
+   ========================================================= */
+
+@media (max-width: 1050px) {
+
+    .cta-paths-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cta-card-intervention {
+        grid-column: 1 / -1;
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .cta-support {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .cta-hero {
+        padding: 80px 20px;
+    }
+
+    .cta-hero h1 {
+        font-size: 2.4rem;
+    }
+
+    .cta-hero p {
+        font-size: 1rem;
+    }
+
+    .cta-paths {
+        padding: 70px 15px;
+    }
+
+    .cta-section-header {
+        margin-bottom: 40px;
+    }
+
+    .cta-section-header h2 {
+        font-size: 2rem;
+    }
+
+    .cta-paths-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .cta-card-intervention {
+        grid-column: auto;
+        max-width: none;
+    }
+
+    .cta-card {
+        padding: 28px 22px;
+    }
+
+    .cta-support {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 15px;
+        padding: 35px 25px;
+    }
+
+    .cta-support-content {
+        align-items: flex-start;
+    }
+
+    .cta-support-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .cta-support-button {
+        width: 100%;
+    }
+
+    .cta-final {
+        margin-top: 70px;
+        padding: 70px 20px;
+    }
+
+    .cta-final h2 {
+        font-size: 1.9rem;
+    }
+
+}
+
+
+/* =========================================================
+   PETITS ÉCRANS
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .cta-hero {
+        padding: 65px 16px;
+    }
+
+    .cta-hero h1 {
+        font-size: 2rem;
+    }
+
+    .cta-hero p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+
+    .cta-card h3 {
+        font-size: 1.35rem;
+    }
+
+    .cta-card-number {
+        font-size: 1.5rem;
+        top: 25px;
+        right: 22px;
+    }
+
+    .cta-support-content {
+        flex-direction: column;
+    }
+
+    .cta-final h2 {
+        font-size: 1.65rem;
+    }
+
+
+}
+
+/* =========================================
+   FORMULAIRE JEUNE
+========================================= */
+
+.youth-form-wrapper {
+    max-width: 900px;
+    margin: 70px auto 0;
+    padding: 45px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+}
+
+.youth-form-header {
+    margin-bottom: 35px;
+}
+
+.youth-form-header h2 {
+    margin: 5px 0 12px;
+    color: #111827;
+    font-size: 2rem;
+}
+
+.youth-form-header p {
+    margin: 0;
+    color: #6b7280;
+    line-height: 1.7;
+}
+
+.youth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.youth-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.youth-form-group>label {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.optional {
+    color: #9ca3af;
+    font-size: 0.82rem;
+    font-weight: 400;
+}
+
+.youth-form textarea,
+.youth-form input[type="text"],
+.youth-form select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    outline: none;
+    background: #ffffff;
+    color: #374151;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.youth-form textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+.youth-form textarea:focus,
+.youth-form input[type="text"]:focus,
+.youth-form select:focus {
+    border-color: #e8631a;
+    box-shadow: 0 0 0 3px rgba(232, 99, 26, 0.12);
+}
+
+/* MESSAGE VOCAL */
+
+.voice-message-box {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px;
+    border: 1px dashed #f1a16f;
+    border-radius: 16px;
+    background: #fff8f4;
+}
+
+.voice-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #ffffff;
+    font-size: 1.4rem;
+}
+
+.voice-message-box>div:nth-child(2) {
+    flex: 1;
+}
+
+.voice-message-box strong {
+    color: #111827;
+}
+
+.voice-message-box p {
+    margin: 5px 0;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.voice-message-box small {
+    color: #9ca3af;
+}
+
+.voice-record-button {
+    padding: 11px 18px;
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    background: #e8631a;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* RAPPEL */
+
+.callback-options {
+    display: flex;
+    gap: 12px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 100px;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.radio-option input {
+    accent-color: #e8631a;
+}
+
+.callback-fields {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    padding: 25px;
+    border-radius: 16px;
+    background: #f9fafb;
+}
+
+/* CONFIDENTIALITÉ */
+
+.youth-privacy-note {
+    padding: 18px 20px;
+    border-left: 4px solid #e8631a;
+    border-radius: 8px;
+    background: #fff8f4;
+}
+
+.youth-privacy-note strong {
+    color: #111827;
+}
+
+.youth-privacy-note p {
+    margin: 6px 0 0;
+    color: #6b7280;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* ENVOYER */
+
+.youth-submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 52px;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    background: #e8631a;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.youth-submit-button:hover {
+    background: #d65310;
+    transform: translateY(-2px);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .youth-form-wrapper {
+        margin: 45px 0 0;
+        padding: 28px 20px;
+    }
+
+    .youth-form-header h2 {
+        font-size: 1.6rem;
+    }
+
+    .voice-message-box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .voice-record-button {
+        width: 100%;
+    }
+
+    .callback-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   ENREGISTREMENT VOCAL
+========================================= */
+
+.voice-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.voice-icon.recording {
+    animation: voicePulse 1.2s infinite;
+}
+
+@keyframes voicePulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.recording-text {
+    color: #dc2626 !important;
+}
+
+.voice-stop-button,
+.voice-reset-button {
+    flex-shrink: 0;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.voice-stop-button {
+    border: none;
+    color: #ffffff;
+    background: #dc2626;
+}
+
+.voice-stop-button:hover {
+    background: #b91c1c;
+}
+
+.voice-reset-button {
+    border: 1px solid #e8631a;
+    color: #e8631a;
+    background: #ffffff;
+}
+
+.voice-reset-button:hover {
+    color: #ffffff;
+    background: #e8631a;
+}
+
+.voice-audio-player {
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    margin-top: 12px;
+}
+
+.voice-error {
+    padding: 12px 15px;
+    border-radius: 10px;
+    color: #991b1b;
+    background: #fef2f2;
+    font-size: 0.88rem;
+}
+
+@media (max-width: 768px) {
+    .voice-audio-player {
+        max-width: 100%;
+    }
+
+    .voice-stop-button,
+    .voice-reset-button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================
+   RETOUR ENVOI FORMULAIRE
+========================================= */
+
+.youth-submit-success,
+.youth-submit-error {
+    padding: 16px 18px;
+    border-radius: 12px;
+}
+
+.youth-submit-success {
+    color: #166534;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+.youth-submit-error {
+    color: #991b1b;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
+.youth-submit-success strong,
+.youth-submit-error strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.youth-submit-success p,
+.youth-submit-error p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.youth-submit-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =========================================================
+   FORMULAIRE PARTENAIRE
+========================================================= */
+
+.partner-form-section {
+    padding: 0 20px 70px;
+}
+
+.partner-form-container {
+    max-width: 950px;
+    margin: 0 auto;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+
+    padding: 32px;
+
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+.partner-form-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+
+    margin-bottom: 30px;
+}
+
+.partner-form-icon {
+    width: 55px;
+    height: 55px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background: #eff6ff;
+
+    font-size: 26px;
+}
+
+.partner-form-header h2 {
+    margin: 0 0 8px;
+
+    font-size: 27px;
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+.partner-form-header p {
+    margin: 0;
+
+    color: #64748b;
+
+    line-height: 1.6;
+}
+
+
+/* GRID */
+
+.partner-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.partner-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.partner-field-full {
+    grid-column: 1 / -1;
+}
+
+.partner-field label {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.partner-field label span {
+    font-weight: 400;
+    color: #64748b;
+}
+
+.partner-field input,
+.partner-field textarea {
+    width: 100%;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+
+    padding: 13px 14px;
+
+    background: #fff;
+
+    color: #0f172a;
+
+    font: inherit;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.partner-field textarea {
+    resize: vertical;
+    min-height: 145px;
+}
+
+.partner-field input:focus,
+.partner-field textarea:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+
+/* RECONTACT */
+
+.partner-callback {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+}
+
+.partner-callback-title {
+    margin: 0 0 12px;
+
+    font-weight: 600;
+
+    color: #1e293b;
+}
+
+.partner-radio-group {
+    display: flex;
+    gap: 25px;
+}
+
+.partner-radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    cursor: pointer;
+}
+
+
+/* MESSAGES */
+
+.partner-message {
+    margin-top: 22px;
+
+    padding: 15px 18px;
+
+    border-radius: 10px;
+
+    font-weight: 500;
+}
+
+.partner-message-success {
+    background: #dcfce7;
+    border: 1px solid #86efac;
+    color: #166534;
+}
+
+.partner-message-error {
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+
+/* BOUTON */
+
+.partner-submit-wrapper {
+    margin-top: 25px;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.partner-submit-button {
+    border: none;
+    border-radius: 10px;
+
+    padding: 13px 24px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.partner-submit-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.partner-submit-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .partner-form-section {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .partner-form-container {
+        padding: 22px 18px;
+        border-radius: 15px;
+    }
+
+    .partner-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .partner-field-full {
+        grid-column: auto;
+    }
+
+    .partner-form-header {
+        flex-direction: column;
+    }
+
+    .partner-submit-wrapper {
+        display: block;
+    }
+
+    .partner-submit-button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   FORMULAIRE SOLLICITATION D'INTERVENTION
+========================================================= */
+
+.intervention-form-section {
+    padding: 0 20px 70px;
+}
+
+.intervention-form-container {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 32px;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+.intervention-form-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+
+    margin-bottom: 30px;
+}
+
+.intervention-form-icon {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    background: #fef3c7;
+    border-radius: 15px;
+
+    font-size: 26px;
+}
+
+.intervention-form-header h2 {
+    margin: 0 0 8px;
+
+    color: #0f172a;
+
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.intervention-form-header p {
+    margin: 0;
+
+    color: #64748b;
+
+    line-height: 1.6;
+}
+
+
+/* Champs */
+
+.intervention-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.intervention-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.intervention-field-full {
+    grid-column: 1 / -1;
+}
+
+.intervention-field label {
+    color: #1e293b;
+
+    font-weight: 600;
+}
+
+.intervention-field small {
+    color: #64748b;
+}
+
+.intervention-field input,
+.intervention-field select,
+.intervention-field textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    background: #fff;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+
+    color: #0f172a;
+
+    font: inherit;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.intervention-field textarea {
+    resize: vertical;
+}
+
+.intervention-field input:focus,
+.intervention-field select:focus,
+.intervention-field textarea:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+
+/* Format */
+
+.intervention-format {
+    margin-top: 25px;
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.intervention-format-title {
+    margin: 0 0 12px;
+
+    color: #1e293b;
+
+    font-weight: 600;
+}
+
+.intervention-radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.intervention-radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    cursor: pointer;
+}
+
+.intervention-duration,
+.intervention-additional {
+    margin-top: 22px;
+}
+
+
+/* Messages */
+
+.intervention-message {
+    margin-top: 22px;
+
+    padding: 15px 18px;
+
+    border-radius: 10px;
+
+    font-weight: 500;
+}
+
+.intervention-message-success {
+    background: #dcfce7;
+    border: 1px solid #86efac;
+
+    color: #166534;
+}
+
+.intervention-message-error {
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+
+    color: #991b1b;
+}
+
+
+/* Submit */
+
+.intervention-submit-wrapper {
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 25px;
+}
+
+.intervention-submit-button {
+    padding: 13px 24px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #2563eb;
+    color: #fff;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.intervention-submit-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.intervention-submit-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .intervention-form-section {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .intervention-form-container {
+        padding: 22px 18px;
+
+        border-radius: 15px;
+    }
+
+    .intervention-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .intervention-field-full {
+        grid-column: auto;
+    }
+
+    .intervention-form-header {
+        flex-direction: column;
+    }
+
+    .intervention-radio-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .intervention-submit-wrapper {
+        display: block;
+    }
+
+    .intervention-submit-button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   CTA - CORRECTIONS MOBILE FINALES
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+.cta-page {
+    overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+
+    /* Évite les débordements */
+    .cta-card,
+    .youth-form-wrapper,
+    .partner-form-container,
+    .intervention-form-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Zones tactiles suffisamment grandes */
+    .cta-action,
+    .cta-card-link,
+    .cta-card-button,
+    .youth-submit-button,
+    .partner-submit-button,
+    .intervention-submit-button,
+    .voice-record-button,
+    .voice-stop-button,
+    .voice-reset-button {
+        min-height: 48px;
+    }
+
+    /* Formulaire jeune */
+    .callback-options {
+        flex-wrap: wrap;
+    }
+
+    .radio-option {
+        flex: 1 1 120px;
+    }
+
+    /* Lecteur audio */
+    .voice-audio-player {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Champs */
+    .youth-form input,
+    .youth-form textarea,
+    .youth-form select,
+    .partner-field input,
+    .partner-field textarea,
+    .intervention-field input,
+    .intervention-field textarea,
+    .intervention-field select {
+        max-width: 100%;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .cta-hero {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .cta-hero h1 {
+        font-size: 1.85rem;
+        overflow-wrap: break-word;
+    }
+
+    .cta-section-header h2 {
+        font-size: 1.7rem;
+    }
+
+    .cta-card {
+        padding: 25px 18px;
+        border-radius: 18px;
+    }
+
+    .youth-form-wrapper {
+        padding: 24px 16px;
+        border-radius: 18px;
+    }
+
+    .partner-form-section,
+    .intervention-form-section {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .partner-form-container,
+    .intervention-form-container {
+        padding: 22px 15px;
+    }
+
+    .partner-form-header h2,
+    .intervention-form-header h2,
+    .youth-form-header h2 {
+        font-size: 1.5rem;
+        overflow-wrap: break-word;
+    }
+
+    .callback-options,
+    .partner-radio-group,
+    .intervention-radio-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .radio-option {
+        width: 100%;
+    }
+
+    .cta-support {
+        padding: 28px 18px;
+    }
+}
+
+/* =========================================================
+   FORMULAIRE BÉNÉVOLAT
+   ========================================================= */
+
+.volunteer-form-section {
+    padding: 20px 20px 70px;
+}
+
+.volunteer-form-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 24px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+}
+
+.volunteer-form-header {
+    margin-bottom: 30px;
+}
+
+.volunteer-form-header h2 {
+    margin: 8px 0 10px;
+    font-size: 2rem;
+    color: #1a1a1a;
+}
+
+.volunteer-form-header p {
+    margin: 0;
+    color: #666666;
+    line-height: 1.7;
+}
+
+.volunteer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.volunteer-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.volunteer-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.volunteer-field label {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.volunteer-field input,
+.volunteer-field textarea {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+    background: #ffffff;
+    font: inherit;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.volunteer-field input:focus,
+.volunteer-field textarea:focus {
+    border-color: #E8631A;
+    box-shadow: 0 0 0 3px rgba(232, 99, 26, 0.12);
+}
+
+.volunteer-field textarea {
+    resize: vertical;
+    min-height: 130px;
+}
+
+.volunteer-submit-button {
+    align-self: flex-start;
+    min-height: 48px;
+    padding: 13px 24px;
+    border: none;
+    border-radius: 12px;
+    background: #1a1a1a;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.volunteer-submit-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.volunteer-submit-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.volunteer-success,
+.volunteer-error {
+    margin-bottom: 22px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    line-height: 1.5;
+}
+
+.volunteer-success {
+    background: #ecfdf3;
+    border: 1px solid #b7ebc6;
+    color: #166534;
+}
+
+.volunteer-error {
+    background: #fff1f1;
+    border: 1px solid #f3bcbc;
+    color: #991b1b;
+}
+
+
+/* =========================================================
+   FORMULAIRE BÉNÉVOLAT - RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .volunteer-form-section {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .volunteer-form-container {
+        max-width: 100%;
+        padding: 28px 20px;
+        border-radius: 18px;
+    }
+
+    .volunteer-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .volunteer-field input,
+    .volunteer-field textarea {
+        font-size: 16px;
+    }
+
+    .volunteer-submit-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .volunteer-form-section {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .volunteer-form-container {
+        padding: 22px 15px;
+    }
+
+    .volunteer-form-header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* =========================================================
+   DON
+   ========================================================= */
+
+.donation-section {
+    padding: 20px 20px 70px;
+}
+
+.donation-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 24px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+}
+
+.donation-header {
+    margin-bottom: 28px;
+}
+
+.donation-header h2 {
+    margin: 8px 0 10px;
+    font-size: 2rem;
+    color: #1a1a1a;
+}
+
+.donation-header p {
+    margin: 0;
+    color: #666666;
+    line-height: 1.7;
+}
+
+.donation-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px;
+    background: #fff8f3;
+    border: 1px solid rgba(232, 99, 26, 0.2);
+    border-radius: 16px;
+}
+
+.donation-notice svg {
+    flex-shrink: 0;
+    color: #E8631A;
+}
+
+.donation-notice strong {
+    display: block;
+    margin-bottom: 7px;
+    color: #1a1a1a;
+}
+
+.donation-notice p {
+    margin: 0;
+    color: #666666;
+    line-height: 1.65;
+}
+
+.donation-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.donation-primary-button,
+.donation-secondary-button {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.donation-primary-button {
+    background: #E8631A;
+    color: #ffffff;
+}
+
+.donation-secondary-button {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+.donation-primary-button:hover,
+.donation-secondary-button:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+}
+
+.donation-security {
+    margin: 20px 0 0;
+    font-size: 0.86rem;
+    color: #777777;
+    line-height: 1.6;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .donation-section {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .donation-container {
+        max-width: 100%;
+        padding: 28px 20px;
+        border-radius: 18px;
+    }
+
+    .donation-actions {
+        flex-direction: column;
+    }
+
+    .donation-primary-button,
+    .donation-secondary-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .donation-section {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .donation-container {
+        padding: 22px 15px;
+    }
+
+    .donation-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .donation-notice {
+        padding: 18px;
+    }
+}

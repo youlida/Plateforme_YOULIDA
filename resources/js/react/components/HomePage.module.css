@@ -568,3 +568,259 @@
   }
 }
 
+/* Sections dynamiques */
+.articles, .programmes, .partenaires, .equipe {
+  padding: 4rem 0;
+  background-color: #f9fafb;
+}
+
+.articles:nth-child(even),
+.programmes:nth-child(even),
+.equipe:nth-child(even) {
+  background-color: white;
+}
+
+/* Grilles */
+.articlesGrid, .programmesGrid, .equipeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Cartes d'articles */
+.articleCard, .programmeCard {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.articleCard:hover, .programmeCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.articleImageWrapper, .programmeImageWrapper {
+  height: 200px;
+  overflow: hidden;
+}
+
+.articleImage, .programmeImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.articleCard:hover .articleImage,
+.programmeCard:hover .programmeImage {
+  transform: scale(1.05);
+}
+
+.articleContent, .programmeContent {
+  padding: 1.5rem;
+}
+
+.articleMeta, .programmeMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.articleCategory {
+  background-color: #e63946;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.articleDate, .programmeLocation, .programmeDate {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #666;
+}
+
+.metaIcon {
+  width: 14px;
+  height: 14px;
+}
+
+.articleTitle, .programmeTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.articleExcerpt, .programmeDescription {
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.readMore, .programmeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e63946;
+  text-decoration: none;
+  font-weight: 500;
+  transition: gap 0.3s ease;
+}
+
+.readMore:hover, .programmeLink:hover {
+  gap: 0.75rem;
+  color: #c1121f;
+}
+
+.readMoreIcon, .linkIcon, .viewAllIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Statut des programmes */
+.programmeStatus {
+  margin: 1rem 0;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.statusBadge.active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.statusBadge.inactive {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Pied de section */
+.sectionFooter {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.viewAllLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e63946;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: gap 0.3s ease;
+}
+
+.viewAllLink:hover {
+  gap: 0.75rem;
+  color: #c1121f;
+}
+
+/* Partenaires */
+.partenairesGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.partenaireItem {
+  max-width: 150px;
+  text-align: center;
+}
+
+.partenaireItem img {
+  max-width: 100%;
+  max-height: 80px;
+  filter: grayscale(1);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.partenaireItem img:hover {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+.partenaireNom {
+  font-weight: 500;
+  color: #666;
+}
+
+/* Équipe */
+.equipeCard {
+  text-align: center;
+  padding: 1rem;
+}
+
+.equipePhoto {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem;
+  border: 3px solid #e63946;
+  padding: 3px;
+}
+
+.equipePhotoPlaceholder {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  background-color: #e63946;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: bold;
+  border: 3px solid #c1121f;
+}
+
+.equipeName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.equipeRole {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+/* Avatar pour témoignages */
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e63946;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.testimonialHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}

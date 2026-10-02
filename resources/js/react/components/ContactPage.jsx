@@ -1,89 +1,418 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  Mail,
+  Phone,
+  MessageCircle,
+  Facebook,
+  Linkedin,
+  Twitter,
+  Send,
+} from "lucide-react";
+
 import "./ContactPage.css";
 
 export default function ContactPage() {
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    /*
+     * L'envoi au backend Laravel sera branché ici.
+     */
+    console.log(formData);
+  };
+
   return (
     <div className="contact-page">
-      {/* Section Hero */}
+
+      {/* =========================================
+          HERO
+      ========================================== */}
       <header className="contact-hero">
-        <h1>Contactez-nous</h1>
+
+        <span className="contact-badge">
+          Nous contacter
+        </span>
+
+        <h1>
+          Contactez YOULIDA
+        </h1>
+
         <p>
-          Vous avez une question, une idée de collaboration ou souhaitez en savoir plus ?  
-          Nous serions ravis d’échanger avec vous.
+          Une question, une demande d'information ou simplement
+          besoin d'entrer en contact avec notre équipe ?
+          Écrivez-nous ou utilisez l'un de nos moyens de contact.
         </p>
+
       </header>
 
-      {/* Coordonnées */}
+
+      {/* =========================================
+          COORDONNÉES
+      ========================================== */}
       <section className="contact-info">
-        <div className="info-card">
-          <div className="icon">📍</div>
-          <h3>Adresse</h3>
-          <p>Rue des Écoles, Casablanca, Maroc</p>
-        </div>
-        <div className="info-card">
-          <div className="icon">📧</div>
+
+        {/* EMAIL */}
+        <a
+          href="mailto:contact@youlida.org"
+          className="info-card"
+        >
+
+          <div className="icon">
+            <Mail size={28} />
+          </div>
+
           <h3>Email</h3>
-          <p>contact@josueservicedigital.com</p>
-        </div>
-        <div className="info-card">
-          <div className="icon">📞</div>
+
+          <p>
+            contact@youlida.org
+          </p>
+
+          <span className="contact-action">
+            Envoyer un email
+          </span>
+
+        </a>
+
+
+        {/* TÉLÉPHONE */}
+        <a
+          href="tel:+22673525290"
+          className="info-card"
+        >
+
+          <div className="icon">
+            <Phone size={28} />
+          </div>
+
           <h3>Téléphone</h3>
-          <p>+212 772 376 608</p>
-        </div>
+
+          <p>
+            +226 73 52 52 90
+          </p>
+
+          <span className="contact-action">
+            Appeler YOULIDA
+          </span>
+
+        </a>
+
+
+        {/* WHATSAPP */}
+        <a
+          href="https://wa.me/message/V2TTCFZB6NFIB1"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="info-card"
+        >
+
+          <div className="icon">
+            <MessageCircle size={28} />
+          </div>
+
+          <h3>WhatsApp</h3>
+
+          <p>
+            Échangez directement avec YOULIDA
+          </p>
+
+          <span className="contact-action">
+            Ouvrir WhatsApp
+          </span>
+
+        </a>
+
       </section>
 
-      {/* Formulaire de contact */}
+
+      {/* =========================================
+          FORMULAIRE DE CONTACT
+      ========================================== */}
       <section className="contact-form-section">
-        <h2>Envoyez-nous un message</h2>
-        <form className="contact-form">
-          <div className="form-group">
-            <label>Nom complet</label>
-            <input type="text" placeholder="Votre nom" required />
-          </div>
+
+        <div className="contact-form-header">
+
+          <span className="contact-badge">
+            Écrivez-nous
+          </span>
+
+          <h2>
+            Envoyez-nous un message
+          </h2>
+
+          <p>
+            Utilisez ce formulaire pour toute demande générale
+            adressée à YOULIDA.
+          </p>
+
+        </div>
+
+
+        <form
+          className="contact-form"
+          onSubmit={handleSubmit}
+        >
 
           <div className="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="Votre adresse email" required />
+
+            <label htmlFor="name">
+              Nom complet
+            </label>
+
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Votre nom complet"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+
           </div>
+
 
           <div className="form-group">
-            <label>Objet</label>
-            <input type="text" placeholder="Sujet de votre message" />
+
+            <label htmlFor="email">
+              Adresse email
+            </label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="exemple@email.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+
           </div>
+
 
           <div className="form-group">
-            <label>Message</label>
-            <textarea rows="5" placeholder="Votre message ici..." required></textarea>
+
+            <label htmlFor="subject">
+              Objet
+            </label>
+
+            <input
+              id="subject"
+              name="subject"
+              type="text"
+              placeholder="Objet de votre message"
+              value={formData.subject}
+              onChange={handleChange}
+            />
+
           </div>
 
-          <button type="submit" className="btn-submit">
+
+          <div className="form-group">
+
+            <label htmlFor="message">
+              Message
+            </label>
+
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              placeholder="Écrivez votre message..."
+              value={formData.message}
+              onChange={handleChange}
+              required
+            />
+
+          </div>
+
+
+          <button
+            type="submit"
+            className="btn-submit"
+          >
+            <Send size={18} />
+
             Envoyer le message
           </button>
+
         </form>
+
       </section>
 
-      {/* Section FAQ */}
-      <section className="faq-section">
-        <h2>Questions fréquentes</h2>
-        <div className="faq-item">
-          <h4>Comment puis-je devenir bénévole ?</h4>
+
+      {/* =========================================
+          AUTRES BESOINS
+      ========================================== */}
+      <section className="contact-orientation">
+
+        <div className="contact-form-header">
+
+          <span className="contact-badge">
+            Vous souhaitez agir ?
+          </span>
+
+          <h2>
+            Vous avez une demande spécifique ?
+          </h2>
+
           <p>
-            Vous pouvez vous inscrire via notre page “S’impliquer” pour rejoindre notre équipe de volontaires.
+            YOULIDA dispose d'un espace dédié aux demandes
+            d'accompagnement et aux différentes formes
+            d'engagement.
           </p>
+
         </div>
-        <div className="faq-item">
-          <h4>Proposez-vous des stages ?</h4>
-          <p>
-            Oui, nous proposons des stages en communication, développement web et gestion de projet.
-          </p>
+
+
+        <div className="orientation-grid">
+
+          <a
+            href="/call-to-action"
+            className="orientation-card"
+          >
+            <MessageCircle size={26} />
+
+            <h3>
+              Besoin de parler ?
+            </h3>
+
+            <p>
+              Accédez à l'espace prévu pour les jeunes
+              souhaitant échanger avec YOULIDA.
+            </p>
+
+            <span>
+              Accéder à l'espace →
+            </span>
+          </a>
+
+
+          <a
+            href="/call-to-action"
+            className="orientation-card"
+          >
+            <MessageCircle size={26} />
+
+            <h3>
+              Devenir partenaire
+            </h3>
+
+            <p>
+              Découvrez l'espace consacré aux demandes
+              de partenariat et de collaboration.
+            </p>
+
+            <span>
+              Proposer un partenariat →
+            </span>
+          </a>
+
+
+          <a
+            href="/call-to-action"
+            className="orientation-card"
+          >
+            <MessageCircle size={26} />
+
+            <h3>
+              Solliciter YOULIDA
+            </h3>
+
+            <p>
+              Adressez une demande d'intervention
+              à l'équipe YOULIDA.
+            </p>
+
+            <span>
+              Faire une demande →
+            </span>
+          </a>
+
         </div>
-        <div className="faq-item">
-          <h4>Comment faire un don ?</h4>
-          <p>
-            Vous pouvez faire un don sécurisé via notre plateforme de paiement disponible sur la page “Soutenir”.
-          </p>
-        </div>
+
       </section>
+
+
+      {/* =========================================
+          RÉSEAUX SOCIAUX
+      ========================================== */}
+      <section className="contact-social">
+
+        <div className="contact-form-header">
+
+          <span className="contact-badge">
+            Réseaux sociaux
+          </span>
+
+          <h2>
+            Suivez YOULIDA
+          </h2>
+
+          <p>
+            Retrouvez également YOULIDA sur ses plateformes
+            sociales officielles.
+          </p>
+
+        </div>
+
+
+        <div className="social-contact-links">
+
+          <a
+            href="https://www.facebook.com/youlida.bfa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-contact-link"
+          >
+            <Facebook size={22} />
+
+            Facebook
+          </a>
+
+
+          <a
+            href="https://www.linkedin.com/company/102186032/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-contact-link"
+          >
+            <Linkedin size={22} />
+
+            LinkedIn
+          </a>
+
+
+          <a
+            href="https://x.com/YOULIDAbf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-contact-link"
+          >
+            <Twitter size={22} />
+
+            X
+          </a>
+
+        </div>
+
+      </section>
+
     </div>
   );
 }

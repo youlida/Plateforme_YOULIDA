@@ -8,10 +8,79 @@ use Illuminate\Http\Request;
 
 class DonController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $dons = Don::latest()->paginate(10);
-        return view('back.dons.index', compact('dons'));
+        $query = Don::query()->latest();
+
+        // Recherche
+        if ($request->filled('search')) {
+            $search = trim($request->search);
+
+            $query->where(function ($q) use ($search) {
+                $q->where('donor_name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('transaction_id', 'like', "%{$search}%")
+                    ->orWhere('payment_method', 'like', "%{$search}%");
+            });
+        }
+
+        // Filtre par méthode de paiement
+        if ($request->filled('payment_method')) {
+            $query->where(
+                'payment_method',
+                $request->payment_method
+            );
+        }
+
+        // Filtre par date de début
+        if ($request->filled('date_from')) {
+            $query->whereDate(
+                'donated_at',
+                '>=',
+                $request->date_from
+            );
+        }
+
+        // Filtre par date de fin
+        if ($request->filled('date_to')) {
+            $query->whereDate(
+                'donated_at',
+                '<=',
+                $request->date_to
+            );
+        }
+
+        $dons = $query
+            ->paginate(15)
+            ->withQueryString();
+
+
+        // Statistiques globales
+        $totalDons = Don::count();
+
+        $totalAmount = Don::sum('amount');
+
+        $averageAmount = Don::avg('amount') ?? 0;
+
+        // Méthodes existantes pour le filtre
+        $paymentMethods = Don::query()
+            ->whereNotNull('payment_method')
+            ->where('payment_method', '!=', '')
+            ->distinct()
+            ->orderBy('payment_method')
+            ->pluck('payment_method');
+
+
+        return view(
+            'back.dons.index',
+            compact(
+                'dons',
+                'totalDons',
+                'totalAmount',
+                'averageAmount',
+                'paymentMethods'
+            )
+        );
     }
 
     public function create()
@@ -85,10 +154,3 @@ class DonController extends Controller
         return redirect()->route('admin.dons.index')->with('success', 'Don supprimé avec succès.');
     }
 }
-
-
-
-
-
-
-

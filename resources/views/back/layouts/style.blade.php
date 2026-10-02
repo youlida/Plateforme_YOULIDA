@@ -3,8 +3,9 @@
 
 <style>
     :root {
-        --sidebar-width: 260px;
-        --sidebar-bg: #0f172a;
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 78px;
+    --sidebar-bg: #0f172a;
         --sidebar-hover: #1e293b;
         --primary-color: #2563eb;
         --secondary-color: #64748b;
@@ -117,12 +118,16 @@
 
     /* MAIN */
     .main-content {
-        margin-left: var(--sidebar-width);
-        width: calc(100% - var(--sidebar-width));
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    transition:
+        margin-left 0.3s ease,
+        width 0.3s ease;
+}
 
     /* HEADER */
     .admin-header {
@@ -272,6 +277,201 @@
         font-size: 12px;
     }
 
+
+    /* =========================================================
+   SIDEBAR COLLAPSIBLE - DESKTOP
+========================================================= */
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.sidebar-brand-text {
+    min-width: 0;
+    transition: opacity 0.2s ease;
+}
+
+.sidebar-collapse-btn {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.sidebar-collapse-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+}
+
+
+/* Badge nouveaux messages */
+
+.youth-message-badge {
+    margin-left: auto;
+
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--danger-color);
+    color: #fff;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+
+/* ================================
+   SIDEBAR RÉDUITE
+================================ */
+
+body.sidebar-collapsed .sidebar {
+    width: var(--sidebar-collapsed-width);
+}
+
+
+body.sidebar-collapsed .main-content {
+    margin-left: var(--sidebar-collapsed-width);
+
+    width: calc(
+        100% - var(--sidebar-collapsed-width)
+    );
+}
+
+
+/* Marque */
+
+body.sidebar-collapsed .sidebar-brand {
+    padding-left: 12px;
+    padding-right: 12px;
+
+    justify-content: center;
+}
+
+body.sidebar-collapsed .sidebar-brand-text {
+    display: none;
+}
+
+
+/* Bouton */
+
+body.sidebar-collapsed .sidebar-collapse-btn i {
+    transform: rotate(180deg);
+}
+
+
+/* Titres Navigation / Système */
+
+body.sidebar-collapsed .sidebar-menu .menu-title {
+    display: none;
+}
+
+
+/* Espacement général */
+
+body.sidebar-collapsed .sidebar-menu {
+    padding-top: 15px;
+}
+
+
+/* Liens */
+
+body.sidebar-collapsed .sidebar-menu > ul > li > a {
+    width: 52px;
+    min-height: 46px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 12px;
+
+    justify-content: center;
+
+    position: relative;
+}
+
+
+/* Div interne des menus avec sous-menu */
+
+body.sidebar-collapsed
+.sidebar-menu > ul > li > a > div {
+    justify-content: center;
+}
+
+
+/* Icônes */
+
+body.sidebar-collapsed
+.sidebar-menu > ul > li > a i {
+    margin: 0;
+    width: 20px;
+
+    font-size: 17px;
+}
+
+
+/* Cache tous les textes */
+
+body.sidebar-collapsed
+.sidebar-menu > ul > li > a span:not(.youth-message-badge) {
+    display: none;
+}
+
+
+/* Cache flèches des sous-menus */
+
+body.sidebar-collapsed .submenu-arrow {
+    display: none;
+}
+
+
+/* Ferme visuellement les sous-menus */
+
+body.sidebar-collapsed .submenu {
+    display: none !important;
+}
+
+
+/* Badge du message sur l'icône */
+
+body.sidebar-collapsed .youth-message-badge {
+    position: absolute;
+
+    top: 3px;
+    right: 2px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 5px;
+
+    font-size: 10px;
+
+    border: 2px solid var(--sidebar-bg);
+}
     @media (max-width: 991px) {
         .sidebar {
             left: -260px;
@@ -281,10 +481,24 @@
             left: 0;
         }
 
+
         .main-content {
             margin-left: 0;
             width: 100%;
         }
+
+        body.sidebar-collapsed .sidebar {
+    width: var(--sidebar-width);
+}
+
+body.sidebar-collapsed .main-content {
+    margin-left: 0;
+    width: 100%;
+}
+
+.sidebar-collapse-btn {
+    display: none;
+}
     }
     .sidebar-menu ul {
         list-style: none;
@@ -424,5 +638,244 @@ margin:8px 0;
 
 .dropdown-menu-user.show{
 display:flex;
+}
+/* =========================================
+   NOTIFICATIONS ADMIN
+========================================= */
+
+.admin-notification-wrapper {
+    position: relative;
+}
+
+.admin-notification-toggle {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fff;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.admin-notification-toggle:hover {
+    background: #f3f4f6;
+    color: var(--primary-color);
+}
+
+.admin-notification-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 4px;
+    border-radius: 20px;
+    background: #dc2626;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+}
+
+.admin-notification-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 370px;
+    max-width: calc(100vw - 24px);
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    z-index: 1100;
+    display: none;
+    overflow: hidden;
+}
+
+.admin-notification-dropdown.show {
+    display: block;
+}
+
+.admin-notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.admin-notification-header strong {
+    font-size: 15px;
+    color: #111827;
+}
+
+.admin-notification-header p {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 3px 0 0;
+}
+
+.admin-notification-read-all {
+    border: none;
+    background: transparent;
+    color: var(--primary-color);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: right;
+}
+
+.admin-notification-list {
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.admin-notification-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s ease;
+}
+
+.admin-notification-item:hover {
+    background: #f9fafb;
+}
+
+.admin-notification-item.unread {
+    background: #eff6ff;
+}
+
+.admin-notification-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #dbeafe;
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.admin-notification-content strong {
+    display: block;
+    font-size: 13px;
+    color: #111827;
+}
+
+.admin-notification-content p {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 4px 0;
+    line-height: 1.5;
+}
+
+.admin-notification-reference {
+    display: block;
+    font-size: 11px;
+    color: #2563eb;
+    overflow-wrap: anywhere;
+}
+
+.admin-notification-date {
+    display: block;
+    margin-top: 5px;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.admin-notification-dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #2563eb;
+    margin-top: 6px;
+}
+
+.admin-notification-empty {
+    padding: 35px 20px;
+    text-align: center;
+    color: #9ca3af;
+}
+
+.admin-notification-empty i {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.admin-notification-empty p {
+    font-size: 13px;
+    margin: 0;
+}
+
+@media (max-width: 576px) {
+    .topbar {
+        padding: 12px 15px;
+    }
+
+    .admin-notification-dropdown {
+        position: fixed;
+        top: 75px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+    }
+}
+
+.dashboard-kpi-card {
+    position: relative;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.dashboard-kpi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.10);
+}
+
+.dashboard-kpi-card .kpi-arrow {
+    color: #94a3b8;
+    font-size: 0.8rem;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.dashboard-kpi-card:hover .kpi-arrow {
+    color: #0d6efd;
+    transform: translate(2px, -2px);
+}
+
+.dashboard-kpi-card .kpi-link-label {
+    color: #94a3b8;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.dashboard-kpi-card:hover .kpi-link-label {
+    color: #0d6efd;
 }
 </style>

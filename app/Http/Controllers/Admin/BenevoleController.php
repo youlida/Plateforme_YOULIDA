@@ -8,10 +8,61 @@ use Illuminate\Http\Request;
 
 class BenevoleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $benevoles = Benevole::latest()->paginate(10);
-        return view('back.benevoles.index', compact('benevoles'));
+        $query = Benevole::query()->latest();
+
+        // Recherche
+        if ($request->filled('search')) {
+            $search = trim($request->search);
+
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('prenom', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('telephone', 'like', "%{$search}%")
+                    ->orWhere('pays', 'like', "%{$search}%")
+                    ->orWhere('ville', 'like', "%{$search}%");
+            });
+        }
+
+        // Filtre d'approbation
+        if ($request->filled('status')) {
+            if ($request->status === 'approved') {
+                $query->where('is_approved', true);
+            }
+
+            if ($request->status === 'pending') {
+                $query->where('is_approved', false);
+            }
+        }
+
+        $benevoles = $query
+            ->paginate(15)
+            ->withQueryString();
+
+        // Statistiques globales
+        $totalBenevoles = Benevole::count();
+
+        $approvedBenevoles = Benevole::where(
+            'is_approved',
+            true
+        )->count();
+
+        $pendingBenevoles = Benevole::where(
+            'is_approved',
+            false
+        )->count();
+
+        return view(
+            'back.benevoles.index',
+            compact(
+                'benevoles',
+                'totalBenevoles',
+                'approvedBenevoles',
+                'pendingBenevoles'
+            )
+        );
     }
 
     public function create()

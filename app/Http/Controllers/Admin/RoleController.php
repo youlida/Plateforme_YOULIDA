@@ -74,17 +74,18 @@ class RoleController extends Controller
     }
 
     public function destroy(Role $role)
-    {
-        if ($role->users()->exists()) {
-            return redirect()
-                ->route('admin.roles.index')
-                ->with('error', 'Impossible de supprimer ce rôle car il est déjà attribué à des utilisateurs.');
-        }
-
-        $role->delete();
-
-        return redirect()
-            ->route('admin.roles.index')
-            ->with('success', 'Rôle supprimé avec succès.');
+{
+    if ($role->slug === 'superadmin') {
+        return back()->with(
+            'error',
+            'Le rôle Super Administrateur est protégé et ne peut pas être supprimé.'
+        );
     }
+
+    $role->delete();
+
+    return redirect()
+        ->route('admin.roles.index')
+        ->with('success', 'Le rôle a été supprimé avec succès.');
+}
 }
