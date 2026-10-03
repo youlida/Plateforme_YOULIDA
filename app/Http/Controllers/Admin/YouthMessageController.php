@@ -181,6 +181,7 @@ class YouthMessageController extends Controller
                 'exists:youth_messages,id',
             ],
         ]);
+        // Récupérer les messages à supprimer
 
         $messages = YouthMessage::whereIn(
             'id',
