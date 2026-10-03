@@ -241,3 +241,31 @@
         max-width: 170px;
     }
 }
+
+.eunitalLink {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.25s ease;
+}
+
+.eunitalLink:hover {
+    text-decoration: underline;
+    opacity: 0.85;
+}
+
+.separator {
+    margin: 0 6px;
+    opacity: 0.5;
+}
+
+@media (max-width: 576px) {
+    .separator {
+        display: none;
+    }
+
+    .eunitalLink {
+        display: inline-block;
+        margin-top: 4px;
+    }
+}

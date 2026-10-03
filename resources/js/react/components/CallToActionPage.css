@@ -2007,3 +2007,350 @@
         padding: 18px;
     }
 }
+
+
+
+/* =========================================================
+   MODALES CTA YOULIDA
+========================================================= */
+
+.cta-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    width: 100%;
+    height: 100dvh;
+
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px;
+
+    animation: ctaModalOverlayIn 0.22s ease;
+}
+
+.cta-modal {
+    position: relative;
+
+    width: min(1050px, 100%);
+    height: min(92dvh, 950px);
+
+    background: #ffffff;
+    border-radius: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.25),
+        0 8px 30px rgba(0, 0, 0, 0.12);
+
+    animation: ctaModalIn 0.25s ease;
+}
+
+.cta-modal-large {
+    width: min(1200px, 100%);
+}
+
+.cta-modal-small {
+    width: min(760px, 100%);
+    height: auto;
+    max-height: 92dvh;
+}
+
+/* =========================================================
+   BARRE SUPÉRIEURE
+========================================================= */
+
+.cta-modal-topbar {
+    position: relative;
+    z-index: 2;
+
+    flex-shrink: 0;
+
+    min-height: 90px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    padding: 20px 26px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e9edf2;
+}
+
+.cta-modal-topbar > div:first-child {
+    min-width: 0;
+}
+
+.cta-modal-eyebrow {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #e63946;
+
+    font-size: 0.73rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+.cta-modal-topbar h2 {
+    margin: 0;
+
+    color: #1a1a1a;
+
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+/* =========================================================
+   BOUTON FERMER
+========================================================= */
+
+.cta-modal-close {
+    flex: 0 0 auto;
+
+    width: 44px;
+    height: 44px;
+
+    border: 0;
+    border-radius: 50%;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f4f5f7;
+    color: #1a1a1a;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.cta-modal-close:hover {
+    background: #e63946;
+    color: #ffffff;
+    transform: rotate(90deg);
+}
+
+.cta-modal-close:focus-visible {
+    outline: 3px solid rgba(230, 57, 70, 0.25);
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   CONTENU SCROLLABLE
+========================================================= */
+
+.cta-modal-body {
+    flex: 1;
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c9cdd3 transparent;
+}
+
+.cta-modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cta-modal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cta-modal-body::-webkit-scrollbar-thumb {
+    background: #c9cdd3;
+    border-radius: 20px;
+}
+
+/* =========================================================
+   NEUTRALISATION DES ANCIENNES SECTIONS
+   LORSQU'ELLES SONT DANS LA MODALE
+========================================================= */
+
+.cta-modal .youth-form-wrapper,
+.cta-modal .partner-form-section,
+.cta-modal .intervention-form-section,
+.cta-modal .volunteer-form-section,
+.cta-modal .donation-section {
+    margin: 0;
+}
+
+.cta-modal .partner-form-section,
+.cta-modal .intervention-form-section,
+.cta-modal .volunteer-form-section,
+.cta-modal .donation-section {
+    width: 100%;
+}
+
+.cta-modal .partner-form-container,
+.cta-modal .intervention-form-container,
+.cta-modal .volunteer-form-container,
+.cta-modal .donation-container {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes ctaModalOverlayIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes ctaModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(22px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================================================
+   TABLETTE
+========================================================= */
+
+@media (max-width: 900px) {
+    .cta-modal-overlay {
+        padding: 12px;
+    }
+
+    .cta-modal {
+        height: calc(100dvh - 24px);
+        border-radius: 20px;
+    }
+
+    .cta-modal-small {
+        max-height: calc(100dvh - 24px);
+    }
+
+    .cta-modal-topbar {
+        min-height: 80px;
+        padding: 17px 20px;
+    }
+}
+
+/* =========================================================
+   MOBILE : VRAI PLEIN ÉCRAN
+========================================================= */
+
+@media (max-width: 600px) {
+    .cta-modal-overlay {
+        padding: 0;
+        align-items: stretch;
+    }
+
+    .cta-modal,
+    .cta-modal-large,
+    .cta-modal-small {
+        width: 100%;
+        max-width: none;
+
+        height: 100dvh;
+        max-height: 100dvh;
+
+        border-radius: 0;
+
+        animation: ctaModalMobileIn 0.22s ease;
+    }
+
+    .cta-modal-topbar {
+        position: sticky;
+        top: 0;
+
+        min-height: 72px;
+
+        padding:
+            max(14px, env(safe-area-inset-top))
+            16px
+            14px;
+
+        gap: 12px;
+    }
+
+    .cta-modal-eyebrow {
+        font-size: 0.65rem;
+    }
+
+    .cta-modal-topbar h2 {
+        font-size: 1.15rem;
+    }
+
+    .cta-modal-close {
+        width: 42px;
+        height: 42px;
+    }
+
+    .cta-modal-body {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .cta-modal .youth-form-wrapper,
+    .cta-modal .partner-form-container,
+    .cta-modal .intervention-form-container,
+    .cta-modal .volunteer-form-container,
+    .cta-modal .donation-container {
+        border-radius: 0;
+    }
+}
+
+@keyframes ctaModalMobileIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Réduction des animations si demandée par l'utilisateur */
+@media (prefers-reduced-motion: reduce) {
+    .cta-modal-overlay,
+    .cta-modal,
+    .cta-modal-small,
+    .cta-modal-large {
+        animation: none;
+    }
+
+    .cta-modal-close {
+        transition: none;
+    }
+}

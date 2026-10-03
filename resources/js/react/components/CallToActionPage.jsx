@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CallToActionPage.css";
+
 import {
     MessageCircle,
     Handshake,
@@ -7,8 +8,8 @@ import {
     Heart,
     ArrowRight,
     Phone,
-    MessageSquare,
     Gift,
+    X,
 } from "lucide-react";
 
 export default function CallToActionPage() {
@@ -44,6 +45,84 @@ export default function CallToActionPage() {
     const [volunteerError, setVolunteerError] = useState("");
 
     const [showDonationSection, setShowDonationSection] = useState(false);
+
+    const hasOpenModal =
+        showYouthForm ||
+        showPartnerForm ||
+        showInterventionForm ||
+        showVolunteerForm ||
+        showDonationSection;
+
+    useEffect(() => {
+        if (hasOpenModal) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [hasOpenModal]);
+
+    useEffect(() => {
+        const handleEscape = (event) => {
+            if (event.key !== "Escape") return;
+
+            setShowYouthForm(false);
+            setShowPartnerForm(false);
+            setShowInterventionForm(false);
+            setShowVolunteerForm(false);
+            setShowDonationSection(false);
+        };
+
+        document.addEventListener("keydown", handleEscape);
+
+        return () => {
+            document.removeEventListener("keydown", handleEscape);
+        };
+    }, []);
+
+    const closeAllModals = () => {
+        setShowYouthForm(false);
+        setShowPartnerForm(false);
+        setShowInterventionForm(false);
+        setShowVolunteerForm(false);
+        setShowDonationSection(false);
+    };
+
+    const openYouthModal = () => {
+        closeAllModals();
+        setSubmitError("");
+        setSubmitSuccess("");
+        setShowYouthForm(true);
+    };
+
+    const openPartnerModal = () => {
+        closeAllModals();
+        setPartnerSuccess("");
+        setPartnerError("");
+        setShowPartnerForm(true);
+    };
+
+    const openInterventionModal = () => {
+        closeAllModals();
+        setInterventionSuccess("");
+        setInterventionError("");
+        setShowInterventionForm(true);
+    };
+
+    const openVolunteerModal = () => {
+        closeAllModals();
+        setVolunteerSuccess("");
+        setVolunteerError("");
+        setShowVolunteerForm(true);
+    };
+
+    const openDonationModal = () => {
+        closeAllModals();
+        setShowDonationSection(true);
+    };
 
 
 
@@ -559,20 +638,12 @@ export default function CallToActionPage() {
                                 Appeler
                             </a>
 
-                            <a
-                                href="sms:+22673525290"
-                                className="cta-action secondary"
-                            >
-                                <MessageSquare size={18} />
-                                Envoyer un SMS
-                            </a>
-
                         </div>
 
                         <button
                             type="button"
                             className="cta-card-link"
-                            onClick={() => setShowYouthForm(!showYouthForm)}
+                            onClick={openYouthModal}
                         >
                             {showYouthForm ? "Fermer le formulaire" : "Écrire ou envoyer un message"}
                             <ArrowRight size={18} />
@@ -620,11 +691,7 @@ export default function CallToActionPage() {
                         <button
                             type="button"
                             className="cta-card-button"
-                            onClick={() => {
-                                setShowPartnerForm((previous) => !previous);
-                                setPartnerSuccess("");
-                                setPartnerError("");
-                            }}
+                            onClick={openPartnerModal}
                         >
                             {showPartnerForm
                                 ? "Fermer le formulaire"
@@ -674,11 +741,7 @@ export default function CallToActionPage() {
                         <button
                             type="button"
                             className="cta-card-button"
-                            onClick={() => {
-                                setShowInterventionForm((previous) => !previous);
-                                setInterventionSuccess("");
-                                setInterventionError("");
-                            }}
+                            onClick={openInterventionModal}
                         >
                             {showInterventionForm
                                 ? "Fermer le formulaire"
@@ -690,977 +753,1092 @@ export default function CallToActionPage() {
 
                 </div>
                 {showYouthForm && (
-                    <div className="youth-form-wrapper">
+                    <div
+                        className="cta-modal-overlay"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="youth-modal-title"
+                        onMouseDown={(e) => {
+                            if (e.target === e.currentTarget) {
+                                setShowYouthForm(false);
+                            }
+                        }}
+                    >
+                        <div className="cta-modal cta-modal-youth">
 
-                        <div className="youth-form-header">
-                            <span className="cta-section-label">
-                                PARLER À YOULIDA
-                            </span>
+                            <div className="cta-modal-topbar">
+                                <div>
+                                    <span className="cta-modal-eyebrow">
+                                        PARLER À YOULIDA
+                                    </span>
 
-                            <h2>
-                                Besoin de parler ? Nous sommes à votre écoute.
-                            </h2>
-
-                            <p>
-                                Vous pouvez nous écrire sans donner votre nom.
-                                Expliquez simplement ce que vous souhaitez partager.
-                            </p>
-                        </div>
-
-                        <form
-                            className="youth-form"
-                            onSubmit={handleYouthSubmit}
-                        >
-
-                            {/* MESSAGE */}
-                            <div className="youth-form-group">
-                                <label htmlFor="message">
-                                    Votre message
-                                    <span className="optional"> Facultatif</span>
-                                </label>
-
-                                <textarea
-                                    id="message"
-                                    name="message"
-                                    rows="6"
-                                    placeholder="Écrivez ici ce que vous souhaitez partager avec YOULIDA..."
-                                />
-                            </div>
-
-                            {/* CATÉGORIE */}
-                            <div className="youth-form-group">
-                                <label htmlFor="category">
-                                    De quoi souhaitez-vous parler ?
-                                    <span className="optional"> Facultatif</span>
-                                </label>
-
-                                <select id="category" name="category" defaultValue="">
-                                    <option value="">
-                                        Choisir une catégorie
-                                    </option>
-
-                                    <option value="ecole">
-                                        École / études
-                                    </option>
-
-                                    <option value="famille">
-                                        Famille
-                                    </option>
-
-                                    <option value="relations">
-                                        Relations / amitiés
-                                    </option>
-
-                                    <option value="bien-etre">
-                                        Santé / bien-être
-                                    </option>
-
-                                    <option value="sante-sexuelle">
-                                        Santé sexuelle
-                                    </option>
-
-                                    <option value="violence">
-                                        Violence / harcèlement
-                                    </option>
-
-                                    <option value="substances">
-                                        Drogues / substances
-                                    </option>
-
-                                    <option value="orientation">
-                                        Orientation / avenir
-                                    </option>
-
-                                    <option value="autre">
-                                        Autre
-                                    </option>
-
-                                    <option value="non-precise">
-                                        Je préfère ne pas préciser
-                                    </option>
-                                </select>
-                            </div>
-
-                            {/* MESSAGE VOCAL */}
-                            <div className="youth-form-group">
-
-                                <label>
-                                    Message vocal
-                                    <span className="optional"> Facultatif</span>
-                                </label>
-
-                                <div className="voice-message-box">
-
-                                    <div className={`voice-icon ${isRecording ? "recording" : ""}`}>
-                                        🎙️
-                                    </div>
-
-                                    <div className="voice-content">
-
-                                        {!isRecording && !audioURL && (
-                                            <>
-                                                <strong>Vous préférez parler ?</strong>
-
-                                                <p>
-                                                    Enregistrez un message vocal puis écoutez-le
-                                                    avant de l'envoyer.
-                                                </p>
-
-                                                <small>
-                                                    Durée recommandée : 3 à 5 minutes maximum.
-                                                </small>
-                                            </>
-                                        )}
-
-                                        {isRecording && (
-                                            <>
-                                                <strong className="recording-text">
-                                                    ● Enregistrement en cours...
-                                                </strong>
-
-                                                <p>
-                                                    Parlez normalement. Lorsque vous avez terminé,
-                                                    cliquez sur « Arrêter ».
-                                                </p>
-                                            </>
-                                        )}
-
-                                        {audioURL && !isRecording && (
-                                            <>
-                                                <strong>Votre message vocal est prêt</strong>
-
-                                                <p>
-                                                    Écoutez-le avant de continuer.
-                                                </p>
-
-                                                <audio
-                                                    className="voice-audio-player"
-                                                    controls
-                                                    src={audioURL}
-                                                >
-                                                    Votre navigateur ne prend pas en charge
-                                                    la lecture audio.
-                                                </audio>
-                                            </>
-                                        )}
-
-                                    </div>
-
-                                    {!isRecording && !audioURL && (
-                                        <button
-                                            type="button"
-                                            className="voice-record-button"
-                                            onClick={startRecording}
-                                        >
-                                            🎙️ Enregistrer
-                                        </button>
-                                    )}
-
-                                    {isRecording && (
-                                        <button
-                                            type="button"
-                                            className="voice-stop-button"
-                                            onClick={stopRecording}
-                                        >
-                                            ■ Arrêter
-                                        </button>
-                                    )}
-
-                                    {audioURL && !isRecording && (
-                                        <button
-                                            type="button"
-                                            className="voice-reset-button"
-                                            onClick={resetRecording}
-                                        >
-                                            ↻ Recommencer
-                                        </button>
-                                    )}
-
+                                    <h2 id="youth-modal-title">
+                                        Besoin de parler ?
+                                    </h2>
                                 </div>
 
-                                {audioError && (
-                                    <div className="voice-error">
-                                        {audioError}
+                                <button
+                                    type="button"
+                                    className="cta-modal-close"
+                                    onClick={() => setShowYouthForm(false)}
+                                    aria-label="Fermer le formulaire"
+                                >
+                                    <X size={24} />
+                                </button>
+                            </div>
+
+                            <div className="cta-modal-body">
+
+                                <div className="youth-form-wrapper">
+
+                                    <div className="youth-form-header">
+                                        <span className="cta-section-label">
+                                            PARLER À YOULIDA
+                                        </span>
+
+                                        <h2>
+                                            Besoin de parler ? Nous sommes à votre écoute.
+                                        </h2>
+
+                                        <p>
+                                            Vous pouvez nous écrire sans donner votre nom.
+                                            Expliquez simplement ce que vous souhaitez partager.
+                                        </p>
                                     </div>
-                                )}
+                                    <form
+                                        className="youth-form"
+                                        onSubmit={handleYouthSubmit}
+                                    >
 
-                            </div>
+                                        {/* MESSAGE */}
+                                        <div className="youth-form-group">
+                                            <label htmlFor="message">
+                                                Votre message
+                                                <span className="optional"> Facultatif</span>
+                                            </label>
 
-                            {/* RAPPEL */}
-                            <div className="youth-form-group">
+                                            <textarea
+                                                id="message"
+                                                name="message"
+                                                rows="6"
+                                                placeholder="Écrivez ici ce que vous souhaitez partager avec YOULIDA..."
+                                            />
+                                        </div>
 
-                                <label>
-                                    Souhaitez-vous que YOULIDA vous recontacte ?
-                                </label>
+                                        {/* CATÉGORIE */}
+                                        <div className="youth-form-group">
+                                            <label htmlFor="category">
+                                                De quoi souhaitez-vous parler ?
+                                                <span className="optional"> Facultatif</span>
+                                            </label>
 
-                                <div className="callback-options">
+                                            <select id="category" name="category" defaultValue="">
+                                                <option value="">
+                                                    Choisir une catégorie
+                                                </option>
 
-                                    <label className="radio-option">
-                                        <input
-                                            type="radio"
-                                            name="callback"
-                                            value="non"
-                                            checked={wantsCallback === "non"}
-                                            onChange={(e) =>
-                                                setWantsCallback(e.target.value)
-                                            }
-                                        />
+                                                <option value="ecole">
+                                                    École / études
+                                                </option>
 
-                                        Non
-                                    </label>
+                                                <option value="famille">
+                                                    Famille
+                                                </option>
 
-                                    <label className="radio-option">
-                                        <input
-                                            type="radio"
-                                            name="callback"
-                                            value="oui"
-                                            checked={wantsCallback === "oui"}
-                                            onChange={(e) =>
-                                                setWantsCallback(e.target.value)
-                                            }
-                                        />
+                                                <option value="relations">
+                                                    Relations / amitiés
+                                                </option>
 
-                                        Oui
-                                    </label>
+                                                <option value="bien-etre">
+                                                    Santé / bien-être
+                                                </option>
 
-                                </div>
-                            </div>
+                                                <option value="sante-sexuelle">
+                                                    Santé sexuelle
+                                                </option>
 
-                            {/* INFORMATIONS DE RAPPEL */}
+                                                <option value="violence">
+                                                    Violence / harcèlement
+                                                </option>
 
-                            {wantsCallback === "oui" && (
+                                                <option value="substances">
+                                                    Drogues / substances
+                                                </option>
 
-                                <div className="callback-fields">
+                                                <option value="orientation">
+                                                    Orientation / avenir
+                                                </option>
 
-                                    <div className="youth-form-group">
+                                                <option value="autre">
+                                                    Autre
+                                                </option>
 
-                                        <label htmlFor="callbackChannel">
-                                            Comment souhaitez-vous être recontacté ?
-                                        </label>
+                                                <option value="non-precise">
+                                                    Je préfère ne pas préciser
+                                                </option>
+                                            </select>
+                                        </div>
 
-                                        <select
-                                            id="callbackChannel"
-                                            name="callbackChannel"
-                                            defaultValue="whatsapp"
-                                        >
+                                        {/* MESSAGE VOCAL */}
+                                        <div className="youth-form-group">
 
-                                            <option value="whatsapp">
-                                                WhatsApp
-                                            </option>
+                                            <label>
+                                                Message vocal
+                                                <span className="optional"> Facultatif</span>
+                                            </label>
 
-                                            <option value="appel">
-                                                Appel téléphonique
-                                            </option>
+                                            <div className="voice-message-box">
 
-                                            <option value="sms">
+                                                <div className={`voice-icon ${isRecording ? "recording" : ""}`}>
+                                                    🎙️
+                                                </div>
+
+                                                <div className="voice-content">
+
+                                                    {!isRecording && !audioURL && (
+                                                        <>
+                                                            <strong>Vous préférez parler ?</strong>
+
+                                                            <p>
+                                                                Enregistrez un message vocal puis écoutez-le
+                                                                avant de l'envoyer.
+                                                            </p>
+
+                                                            <small>
+                                                                Durée recommandée : 3 à 5 minutes maximum.
+                                                            </small>
+                                                        </>
+                                                    )}
+
+                                                    {isRecording && (
+                                                        <>
+                                                            <strong className="recording-text">
+                                                                ● Enregistrement en cours...
+                                                            </strong>
+
+                                                            <p>
+                                                                Parlez normalement. Lorsque vous avez terminé,
+                                                                cliquez sur « Arrêter ».
+                                                            </p>
+                                                        </>
+                                                    )}
+
+                                                    {audioURL && !isRecording && (
+                                                        <>
+                                                            <strong>Votre message vocal est prêt</strong>
+
+                                                            <p>
+                                                                Écoutez-le avant de continuer.
+                                                            </p>
+
+                                                            <audio
+                                                                className="voice-audio-player"
+                                                                controls
+                                                                src={audioURL}
+                                                            >
+                                                                Votre navigateur ne prend pas en charge
+                                                                la lecture audio.
+                                                            </audio>
+                                                        </>
+                                                    )}
+
+                                                </div>
+
+                                                {!isRecording && !audioURL && (
+                                                    <button
+                                                        type="button"
+                                                        className="voice-record-button"
+                                                        onClick={startRecording}
+                                                    >
+                                                        🎙️ Enregistrer
+                                                    </button>
+                                                )}
+
+                                                {isRecording && (
+                                                    <button
+                                                        type="button"
+                                                        className="voice-stop-button"
+                                                        onClick={stopRecording}
+                                                    >
+                                                        ■ Arrêter
+                                                    </button>
+                                                )}
+
+                                                {audioURL && !isRecording && (
+                                                    <button
+                                                        type="button"
+                                                        className="voice-reset-button"
+                                                        onClick={resetRecording}
+                                                    >
+                                                        ↻ Recommencer
+                                                    </button>
+                                                )}
+
+                                            </div>
+
+                                            {audioError && (
+                                                <div className="voice-error">
+                                                    {audioError}
+                                                </div>
+                                            )}
+
+                                        </div>
+
+                                        {/* RAPPEL */}
+                                        <div className="youth-form-group">
+
+                                            <label>
+                                                Souhaitez-vous que YOULIDA vous recontacte ?
+                                            </label>
+
+                                            <div className="callback-options">
+
+                                                <label className="radio-option">
+                                                    <input
+                                                        type="radio"
+                                                        name="callback"
+                                                        value="non"
+                                                        checked={wantsCallback === "non"}
+                                                        onChange={(e) =>
+                                                            setWantsCallback(e.target.value)
+                                                        }
+                                                    />
+
+                                                    Non
+                                                </label>
+
+                                                <label className="radio-option">
+                                                    <input
+                                                        type="radio"
+                                                        name="callback"
+                                                        value="oui"
+                                                        checked={wantsCallback === "oui"}
+                                                        onChange={(e) =>
+                                                            setWantsCallback(e.target.value)
+                                                        }
+                                                    />
+
+                                                    Oui
+                                                </label>
+
+                                            </div>
+                                        </div>
+
+                                        {/* INFORMATIONS DE RAPPEL */}
+
+                                        {wantsCallback === "oui" && (
+
+                                            <div className="callback-fields">
+
+                                                <div className="youth-form-group">
+
+                                                    <label htmlFor="callbackChannel">
+                                                        Comment souhaitez-vous être recontacté ?
+                                                    </label>
+
+                                                    <select
+                                                        id="callbackChannel"
+                                                        name="callbackChannel"
+                                                        defaultValue="whatsapp"
+                                                    >
+
+                                                        <option value="whatsapp">
+                                                            WhatsApp
+                                                        </option>
+
+                                                        <option value="appel">
+                                                            Appel téléphonique
+                                                        </option>
+
+                                                        {/* <option value="sms">
                                                 SMS
-                                            </option>
+                                            </option> */}
 
-                                            <option value="email">
-                                                Email
-                                            </option>
+                                                        <option value="email">
+                                                            Email
+                                                        </option>
 
-                                            <option value="autre">
-                                                Autre
-                                            </option>
+                                                        <option value="autre">
+                                                            Autre
+                                                        </option>
 
-                                        </select>
+                                                    </select>
 
-                                    </div>
+                                                </div>
 
-                                    <div className="youth-form-group">
+                                                <div className="youth-form-group">
 
-                                        <label htmlFor="contact">
-                                            Votre contact
-                                        </label>
+                                                    <label htmlFor="contact">
+                                                        Votre contact
+                                                    </label>
 
-                                        <input
-                                            type="text"
-                                            id="contact"
-                                            name="contact"
-                                            placeholder="Numéro de téléphone ou adresse email"
-                                        />
+                                                    <input
+                                                        type="text"
+                                                        id="contact"
+                                                        name="contact"
+                                                        placeholder="Numéro de téléphone ou adresse email"
+                                                    />
 
-                                    </div>
+                                                </div>
 
-                                    <div className="youth-form-group">
+                                                <div className="youth-form-group">
 
-                                        <label htmlFor="callbackTime">
-                                            Moment préféré
-                                        </label>
+                                                    <label htmlFor="callbackTime">
+                                                        Moment préféré
+                                                    </label>
 
-                                        <select
-                                            id="callbackTime"
-                                            name="callbackTime"
-                                            defaultValue="indifferent"
+                                                    <select
+                                                        id="callbackTime"
+                                                        name="callbackTime"
+                                                        defaultValue="indifferent"
+                                                    >
+
+                                                        <option value="matin">
+                                                            Matin
+                                                        </option>
+
+                                                        <option value="apres-midi">
+                                                            Après-midi
+                                                        </option>
+
+                                                        <option value="soir">
+                                                            Soir
+                                                        </option>
+
+                                                        <option value="indifferent">
+                                                            Peu importe
+                                                        </option>
+
+                                                    </select>
+
+                                                </div>
+
+                                            </div>
+                                        )}
+
+                                        <div className="youth-privacy-note">
+
+                                            <strong>Votre confidentialité compte.</strong>
+
+                                            <p>
+                                                Vous pouvez envoyer votre message sans indiquer
+                                                votre identité. Un contact est nécessaire uniquement
+                                                si vous demandez à être recontacté.
+                                            </p>
+
+                                        </div>
+
+                                        {submitError && (
+                                            <div className="youth-submit-error">
+                                                <strong>Impossible d'envoyer le message.</strong>
+                                                <p>{submitError}</p>
+                                            </div>
+                                        )}
+
+                                        {submitSuccess && (
+                                            <div className="youth-submit-success">
+                                                <strong>Message envoyé ✓</strong>
+                                                <p>{submitSuccess}</p>
+                                            </div>
+                                        )}
+
+
+                                        <button
+                                            type="submit"
+                                            className="youth-submit-button"
+                                            disabled={isSubmitting}
                                         >
+                                            {isSubmitting ? (
+                                                "Envoi en cours..."
+                                            ) : (
+                                                <>
+                                                    Envoyer mon message
+                                                    <ArrowRight size={18} />
+                                                </>
+                                            )}
+                                        </button>
 
-                                            <option value="matin">
-                                                Matin
-                                            </option>
-
-                                            <option value="apres-midi">
-                                                Après-midi
-                                            </option>
-
-                                            <option value="soir">
-                                                Soir
-                                            </option>
-
-                                            <option value="indifferent">
-                                                Peu importe
-                                            </option>
-
-                                        </select>
-
-                                    </div>
+                                    </form>
 
                                 </div>
-                            )}
-
-                            <div className="youth-privacy-note">
-
-                                <strong>Votre confidentialité compte.</strong>
-
-                                <p>
-                                    Vous pouvez envoyer votre message sans indiquer
-                                    votre identité. Un contact est nécessaire uniquement
-                                    si vous demandez à être recontacté.
-                                </p>
 
                             </div>
-
-                            {submitError && (
-                                <div className="youth-submit-error">
-                                    <strong>Impossible d'envoyer le message.</strong>
-                                    <p>{submitError}</p>
-                                </div>
-                            )}
-
-                            {submitSuccess && (
-                                <div className="youth-submit-success">
-                                    <strong>Message envoyé ✓</strong>
-                                    <p>{submitSuccess}</p>
-                                </div>
-                            )}
-
-
-                            <button
-                                type="submit"
-                                className="youth-submit-button"
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? (
-                                    "Envoi en cours..."
-                                ) : (
-                                    <>
-                                        Envoyer mon message
-                                        <ArrowRight size={18} />
-                                    </>
-                                )}
-                            </button>
-
-                        </form>
-
+                        </div>
                     </div>
                 )}
 
             </section>
             {showPartnerForm && (
-                <section className="partner-form-section">
+                <div
+                    className="cta-modal-overlay"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="partner-modal-title"
+                    onMouseDown={(e) => {
+                        if (e.target === e.currentTarget) {
+                            setShowPartnerForm(false);
+                        }
+                    }}
+                >
+                    <div className="cta-modal">
 
-                    <div className="partner-form-container">
-
-                        <div className="partner-form-header">
-                            <span className="partner-form-icon">
-                                🤝
-                            </span>
-
+                        <div className="cta-modal-topbar">
                             <div>
-                                <h2>
-                                    Devenir partenaire / Collaborer
-                                </h2>
+                                <span className="cta-modal-eyebrow">
+                                    PARTENARIAT
+                                </span>
 
-                                <p>
-                                    Vous souhaitez collaborer avec YOULIDA ?
-                                    Présentez-nous votre organisation et votre
-                                    proposition.
-                                </p>
+                                <h2 id="partner-modal-title">
+                                    Devenir partenaire
+                                </h2>
                             </div>
+
+                            <button
+                                type="button"
+                                className="cta-modal-close"
+                                onClick={() => setShowPartnerForm(false)}
+                                aria-label="Fermer le formulaire"
+                            >
+                                <X size={24} />
+                            </button>
                         </div>
 
+                        <div className="cta-modal-body">
 
-                        <form onSubmit={handlePartnerSubmit}>
+                            <section className="partner-form-section">
 
-                            <div className="partner-form-grid">
+                                <div className="partner-form-container">
 
-                                {/* Organisation */}
-                                <div className="partner-field">
-                                    <label htmlFor="partner-organization">
-                                        Organisation *
-                                    </label>
+                                    <div className="partner-form-header">
+                                        <span className="partner-form-icon">
+                                            🤝
+                                        </span>
 
-                                    <input
-                                        id="partner-organization"
-                                        type="text"
-                                        name="organization"
-                                        required
-                                        maxLength="255"
-                                        placeholder="Nom de votre organisation"
-                                    />
+                                        <div>
+                                            <h2>
+                                                Devenir partenaire / Collaborer
+                                            </h2>
+
+                                            <p>
+                                                Vous souhaitez collaborer avec YOULIDA ?
+                                                Présentez-nous votre organisation et votre
+                                                proposition.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <form onSubmit={handlePartnerSubmit}>
+
+                                        <div className="partner-form-grid">
+
+                                            {/* Organisation */}
+                                            <div className="partner-field">
+                                                <label htmlFor="partner-organization">
+                                                    Organisation *
+                                                </label>
+
+                                                <input
+                                                    id="partner-organization"
+                                                    type="text"
+                                                    name="organization"
+                                                    required
+                                                    maxLength="255"
+                                                    placeholder="Nom de votre organisation"
+                                                />
+                                            </div>
+
+
+                                            {/* Nom */}
+                                            <div className="partner-field">
+                                                <label htmlFor="partner-contact-name">
+                                                    Nom du contact *
+                                                </label>
+
+                                                <input
+                                                    id="partner-contact-name"
+                                                    type="text"
+                                                    name="contact_name"
+                                                    required
+                                                    maxLength="255"
+                                                    placeholder="Nom et prénom"
+                                                />
+                                            </div>
+
+
+                                            {/* Fonction */}
+                                            <div className="partner-field">
+                                                <label htmlFor="partner-function">
+                                                    Fonction
+                                                </label>
+
+                                                <input
+                                                    id="partner-function"
+                                                    type="text"
+                                                    name="contact_function"
+                                                    maxLength="255"
+                                                    placeholder="Ex. Responsable de programme"
+                                                />
+                                            </div>
+
+
+                                            {/* Email */}
+                                            <div className="partner-field">
+                                                <label htmlFor="partner-email">
+                                                    Adresse e-mail *
+                                                </label>
+
+                                                <input
+                                                    id="partner-email"
+                                                    type="email"
+                                                    name="email"
+                                                    required
+                                                    maxLength="255"
+                                                    placeholder="contact@organisation.org"
+                                                />
+                                            </div>
+
+
+                                            {/* Téléphone */}
+                                            <div className="partner-field partner-field-full">
+                                                <label htmlFor="partner-phone">
+                                                    Téléphone
+                                                    <span> (facultatif)</span>
+                                                </label>
+
+                                                <input
+                                                    id="partner-phone"
+                                                    type="tel"
+                                                    name="phone"
+                                                    maxLength="50"
+                                                    placeholder="+226 ..."
+                                                />
+                                            </div>
+
+
+                                            {/* Proposition */}
+                                            <div className="partner-field partner-field-full">
+                                                <label htmlFor="partner-proposal">
+                                                    Votre proposition de collaboration *
+                                                </label>
+
+                                                <textarea
+                                                    id="partner-proposal"
+                                                    name="proposal"
+                                                    required
+                                                    maxLength="10000"
+                                                    rows="6"
+                                                    placeholder="Expliquez-nous brièvement comment vous souhaitez collaborer avec YOULIDA..."
+                                                />
+                                            </div>
+
+                                        </div>
+
+
+                                        {/* Recontact */}
+                                        <div className="partner-callback">
+
+                                            <p className="partner-callback-title">
+                                                Souhaitez-vous être recontacté ?
+                                            </p>
+
+                                            <div className="partner-radio-group">
+
+                                                <label>
+                                                    <input
+                                                        type="radio"
+                                                        name="wants_callback"
+                                                        value="1"
+                                                        defaultChecked
+                                                        required
+                                                    />
+
+                                                    <span>Oui</span>
+                                                </label>
+
+                                                <label>
+                                                    <input
+                                                        type="radio"
+                                                        name="wants_callback"
+                                                        value="0"
+                                                        required
+                                                    />
+
+                                                    <span>Non</span>
+                                                </label>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        {/* Erreur */}
+                                        {partnerError && (
+                                            <div className="partner-message partner-message-error">
+                                                {partnerError}
+                                            </div>
+                                        )}
+
+
+                                        {/* Succès */}
+                                        {partnerSuccess && (
+                                            <div className="partner-message partner-message-success">
+                                                ✓ {partnerSuccess}
+                                            </div>
+                                        )}
+
+
+                                        <div className="partner-submit-wrapper">
+
+                                            <button
+                                                type="submit"
+                                                className="partner-submit-button"
+                                                disabled={partnerSubmitting}
+                                            >
+                                                {partnerSubmitting
+                                                    ? "Envoi en cours..."
+                                                    : "Envoyer ma proposition"}
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
                                 </div>
 
+                            </section>
 
-                                {/* Nom */}
-                                <div className="partner-field">
-                                    <label htmlFor="partner-contact-name">
-                                        Nom du contact *
-                                    </label>
-
-                                    <input
-                                        id="partner-contact-name"
-                                        type="text"
-                                        name="contact_name"
-                                        required
-                                        maxLength="255"
-                                        placeholder="Nom et prénom"
-                                    />
-                                </div>
-
-
-                                {/* Fonction */}
-                                <div className="partner-field">
-                                    <label htmlFor="partner-function">
-                                        Fonction
-                                    </label>
-
-                                    <input
-                                        id="partner-function"
-                                        type="text"
-                                        name="contact_function"
-                                        maxLength="255"
-                                        placeholder="Ex. Responsable de programme"
-                                    />
-                                </div>
-
-
-                                {/* Email */}
-                                <div className="partner-field">
-                                    <label htmlFor="partner-email">
-                                        Adresse e-mail *
-                                    </label>
-
-                                    <input
-                                        id="partner-email"
-                                        type="email"
-                                        name="email"
-                                        required
-                                        maxLength="255"
-                                        placeholder="contact@organisation.org"
-                                    />
-                                </div>
-
-
-                                {/* Téléphone */}
-                                <div className="partner-field partner-field-full">
-                                    <label htmlFor="partner-phone">
-                                        Téléphone
-                                        <span> (facultatif)</span>
-                                    </label>
-
-                                    <input
-                                        id="partner-phone"
-                                        type="tel"
-                                        name="phone"
-                                        maxLength="50"
-                                        placeholder="+226 ..."
-                                    />
-                                </div>
-
-
-                                {/* Proposition */}
-                                <div className="partner-field partner-field-full">
-                                    <label htmlFor="partner-proposal">
-                                        Votre proposition de collaboration *
-                                    </label>
-
-                                    <textarea
-                                        id="partner-proposal"
-                                        name="proposal"
-                                        required
-                                        maxLength="10000"
-                                        rows="6"
-                                        placeholder="Expliquez-nous brièvement comment vous souhaitez collaborer avec YOULIDA..."
-                                    />
-                                </div>
-
-                            </div>
-
-
-                            {/* Recontact */}
-                            <div className="partner-callback">
-
-                                <p className="partner-callback-title">
-                                    Souhaitez-vous être recontacté ?
-                                </p>
-
-                                <div className="partner-radio-group">
-
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            name="wants_callback"
-                                            value="1"
-                                            defaultChecked
-                                            required
-                                        />
-
-                                        <span>Oui</span>
-                                    </label>
-
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            name="wants_callback"
-                                            value="0"
-                                            required
-                                        />
-
-                                        <span>Non</span>
-                                    </label>
-
-                                </div>
-
-                            </div>
-
-
-                            {/* Erreur */}
-                            {partnerError && (
-                                <div className="partner-message partner-message-error">
-                                    {partnerError}
-                                </div>
-                            )}
-
-
-                            {/* Succès */}
-                            {partnerSuccess && (
-                                <div className="partner-message partner-message-success">
-                                    ✓ {partnerSuccess}
-                                </div>
-                            )}
-
-
-                            <div className="partner-submit-wrapper">
-
-                                <button
-                                    type="submit"
-                                    className="partner-submit-button"
-                                    disabled={partnerSubmitting}
-                                >
-                                    {partnerSubmitting
-                                        ? "Envoi en cours..."
-                                        : "Envoyer ma proposition"}
-                                </button>
-
-                            </div>
-
-                        </form>
-
+                        </div>
                     </div>
-
-                </section>
+                </div>
             )}
 
 
             {showInterventionForm && (
-                <section className="intervention-form-section">
+                <div
+                    className="cta-modal-overlay"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="intervention-modal-title"
+                    onMouseDown={(e) => {
+                        if (e.target === e.currentTarget) {
+                            setShowInterventionForm(false);
+                        }
+                    }}
+                >
+                    <div className="cta-modal cta-modal-large">
 
-                    <div className="intervention-form-container">
-
-                        <div className="intervention-form-header">
-
-                            <span className="intervention-form-icon">
-                                📣
-                            </span>
-
+                        <div className="cta-modal-topbar">
                             <div>
-                                <h2>
+                                <span className="cta-modal-eyebrow">
+                                    INTERVENTION
+                                </span>
+
+                                <h2 id="intervention-modal-title">
                                     Solliciter une intervention
                                 </h2>
-
-                                <p>
-                                    Vous souhaitez faire intervenir YOULIDA
-                                    auprès d'un public ? Décrivez-nous votre
-                                    besoin.
-                                </p>
                             </div>
 
+                            <button
+                                type="button"
+                                className="cta-modal-close"
+                                onClick={() => setShowInterventionForm(false)}
+                                aria-label="Fermer le formulaire"
+                            >
+                                <X size={24} />
+                            </button>
                         </div>
 
+                        <div className="cta-modal-body">
 
-                        <form onSubmit={handleInterventionSubmit}>
+                            <section className="intervention-form-section">
 
-                            <div className="intervention-form-grid">
+                                <div className="intervention-form-container">
 
-                                {/* Type de structure */}
-                                <div className="intervention-field">
-
-                                    <label htmlFor="structure-type">
-                                        Type de structure *
-                                    </label>
-
-                                    <select
-                                        id="structure-type"
-                                        name="structure_type"
-                                        required
-                                    >
-                                        <option value="">
-                                            Sélectionnez
-                                        </option>
-
-                                        <option value="ecole">
-                                            École / établissement
-                                        </option>
-
-                                        <option value="communaute">
-                                            Communauté
-                                        </option>
-
-                                        <option value="association">
-                                            Association
-                                        </option>
-
-                                        <option value="groupe_jeunes">
-                                            Groupe de jeunes
-                                        </option>
-
-                                        <option value="evenement">
-                                            Événement
-                                        </option>
-
-                                        <option value="autre">
-                                            Autre
-                                        </option>
-                                    </select>
-
-                                </div>
-
-
-                                {/* Nom structure */}
-                                <div className="intervention-field">
-
-                                    <label htmlFor="structure-name">
-                                        Nom de la structure
-                                    </label>
-
-                                    <input
-                                        id="structure-name"
-                                        type="text"
-                                        name="structure_name"
-                                        maxLength="255"
-                                        placeholder="Nom de l'établissement ou organisation"
-                                    />
-
-                                </div>
-
-
-                                {/* Contact */}
-                                <div className="intervention-field">
-
-                                    <label htmlFor="intervention-contact">
-                                        Nom du contact *
-                                    </label>
-
-                                    <input
-                                        id="intervention-contact"
-                                        type="text"
-                                        name="contact_name"
-                                        required
-                                        maxLength="255"
-                                        placeholder="Nom et prénom"
-                                    />
-
-                                </div>
-
-
-                                {/* Fonction */}
-                                <div className="intervention-field">
-
-                                    <label htmlFor="intervention-function">
-                                        Fonction
-                                    </label>
-
-                                    <input
-                                        id="intervention-function"
-                                        type="text"
-                                        name="contact_function"
-                                        maxLength="255"
-                                        placeholder="Ex. Directeur, coordinateur..."
-                                    />
-
-                                </div>
-
-
-                                {/* Téléphone */}
-                                <div className="intervention-field">
-
-                                    <label htmlFor="intervention-phone">
-                                        Téléphone
-                                    </label>
-
-                                    <input
-                                        id="intervention-phone"
-                                        type="tel"
-                                        name="phone"
-                                        maxLength="50"
-                                        placeholder="+226 ..."
-                                    />
-
-                                </div>
-
-
-                                {/* Email */}
-                                <div className="intervention-field">
-
-                                    <label htmlFor="intervention-email">
-                                        E-mail
-                                    </label>
-
-                                    <input
-                                        id="intervention-email"
-                                        type="email"
-                                        name="email"
-                                        maxLength="255"
-                                        placeholder="contact@exemple.com"
-                                    />
-
-                                    <small>
-                                        Téléphone ou e-mail :
-                                        au moins l'un des deux est obligatoire.
-                                    </small>
-
-                                </div>
-
-
-                                {/* Lieu */}
-                                <div className="intervention-field intervention-field-full">
-
-                                    <label htmlFor="intervention-location">
-                                        Lieu de l'intervention *
-                                    </label>
-
-                                    <input
-                                        id="intervention-location"
-                                        type="text"
-                                        name="location"
-                                        required
-                                        maxLength="255"
-                                        placeholder="Ville, quartier, établissement..."
-                                    />
-
-                                </div>
-
-
-                                {/* Besoin */}
-                                <div className="intervention-field intervention-field-full">
-
-                                    <label htmlFor="intervention-need">
-                                        Besoin / situation *
-                                    </label>
-
-                                    <textarea
-                                        id="intervention-need"
-                                        name="need"
-                                        required
-                                        maxLength="10000"
-                                        rows="5"
-                                        placeholder="Expliquez l'intervention souhaitée et le contexte..."
-                                    />
-
-                                </div>
-
-
-                                {/* Public */}
-                                <div className="intervention-field">
-
-                                    <label htmlFor="target-audience">
-                                        Public concerné *
-                                    </label>
-
-                                    <input
-                                        id="target-audience"
-                                        type="text"
-                                        name="target_audience"
-                                        required
-                                        maxLength="255"
-                                        placeholder="Ex. Adolescents de 14 à 18 ans"
-                                    />
-
-                                </div>
-
-
-                                {/* Participants */}
-                                <div className="intervention-field">
-
-                                    <label htmlFor="estimated-participants">
-                                        Nombre approximatif
-                                    </label>
-
-                                    <input
-                                        id="estimated-participants"
-                                        type="number"
-                                        name="estimated_participants"
-                                        min="1"
-                                        max="1000000"
-                                        placeholder="Ex. 50"
-                                    />
-
-                                </div>
-
-
-                                {/* Période */}
-                                <div className="intervention-field intervention-field-full">
-
-                                    <label htmlFor="desired-period">
-                                        Période souhaitée
-                                    </label>
-
-                                    <input
-                                        id="desired-period"
-                                        type="text"
-                                        name="desired_period"
-                                        maxLength="255"
-                                        placeholder="Ex. Novembre 2026, semaine du 10 novembre..."
-                                    />
-
-                                </div>
-
-                            </div>
-
-
-                            {/* Format */}
-                            <div className="intervention-format">
-
-                                <p className="intervention-format-title">
-                                    Type d'intervention *
-                                </p>
-
-                                <div className="intervention-radio-group">
-
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            name="intervention_format"
-                                            value="ponctuelle"
-                                            checked={interventionFormat === "ponctuelle"}
-                                            onChange={(e) =>
-                                                setInterventionFormat(e.target.value)
-                                            }
-                                        />
-
-                                        <span>
-                                            Intervention ponctuelle
+                                    <div className="intervention-form-header">
+                                        <span className="intervention-form-icon">
+                                            📣
                                         </span>
-                                    </label>
+
+                                        <div>
+                                            <h2>
+                                                Solliciter une intervention
+                                            </h2>
+
+                                            <p>
+                                                Vous souhaitez faire intervenir YOULIDA
+                                                auprès d'un public ? Décrivez-nous votre besoin.
+                                            </p>
+                                        </div>
+                                    </div>
 
 
-                                    <label>
-                                        <input
-                                            type="radio"
-                                            name="intervention_format"
-                                            value="duree"
-                                            checked={interventionFormat === "duree"}
-                                            onChange={(e) =>
-                                                setInterventionFormat(e.target.value)
-                                            }
-                                        />
+                                    <form onSubmit={handleInterventionSubmit}>
 
-                                        <span>
-                                            Intervention sur une durée
-                                        </span>
-                                    </label>
+                                        <div className="intervention-form-grid">
+
+                                            {/* Type de structure */}
+                                            <div className="intervention-field">
+
+                                                <label htmlFor="structure-type">
+                                                    Type de structure *
+                                                </label>
+
+                                                <select
+                                                    id="structure-type"
+                                                    name="structure_type"
+                                                    required
+                                                >
+                                                    <option value="">
+                                                        Sélectionnez
+                                                    </option>
+
+                                                    <option value="ecole">
+                                                        École / établissement
+                                                    </option>
+
+                                                    <option value="communaute">
+                                                        Communauté
+                                                    </option>
+
+                                                    <option value="association">
+                                                        Association
+                                                    </option>
+
+                                                    <option value="groupe_jeunes">
+                                                        Groupe de jeunes
+                                                    </option>
+
+                                                    <option value="evenement">
+                                                        Événement
+                                                    </option>
+
+                                                    <option value="autre">
+                                                        Autre
+                                                    </option>
+                                                </select>
+
+                                            </div>
+
+
+                                            {/* Nom structure */}
+                                            <div className="intervention-field">
+
+                                                <label htmlFor="structure-name">
+                                                    Nom de la structure
+                                                </label>
+
+                                                <input
+                                                    id="structure-name"
+                                                    type="text"
+                                                    name="structure_name"
+                                                    maxLength="255"
+                                                    placeholder="Nom de l'établissement ou organisation"
+                                                />
+
+                                            </div>
+
+
+                                            {/* Contact */}
+                                            <div className="intervention-field">
+
+                                                <label htmlFor="intervention-contact">
+                                                    Nom du contact *
+                                                </label>
+
+                                                <input
+                                                    id="intervention-contact"
+                                                    type="text"
+                                                    name="contact_name"
+                                                    required
+                                                    maxLength="255"
+                                                    placeholder="Nom et prénom"
+                                                />
+
+                                            </div>
+
+
+                                            {/* Fonction */}
+                                            <div className="intervention-field">
+
+                                                <label htmlFor="intervention-function">
+                                                    Fonction
+                                                </label>
+
+                                                <input
+                                                    id="intervention-function"
+                                                    type="text"
+                                                    name="contact_function"
+                                                    maxLength="255"
+                                                    placeholder="Ex. Directeur, coordinateur..."
+                                                />
+
+                                            </div>
+
+
+                                            {/* Téléphone */}
+                                            <div className="intervention-field">
+
+                                                <label htmlFor="intervention-phone">
+                                                    Téléphone
+                                                </label>
+
+                                                <input
+                                                    id="intervention-phone"
+                                                    type="tel"
+                                                    name="phone"
+                                                    maxLength="50"
+                                                    placeholder="+226 ..."
+                                                />
+
+                                            </div>
+
+
+                                            {/* Email */}
+                                            <div className="intervention-field">
+
+                                                <label htmlFor="intervention-email">
+                                                    E-mail
+                                                </label>
+
+                                                <input
+                                                    id="intervention-email"
+                                                    type="email"
+                                                    name="email"
+                                                    maxLength="255"
+                                                    placeholder="contact@exemple.com"
+                                                />
+
+                                                <small>
+                                                    Téléphone ou e-mail :
+                                                    au moins l'un des deux est obligatoire.
+                                                </small>
+
+                                            </div>
+
+
+                                            {/* Lieu */}
+                                            <div className="intervention-field intervention-field-full">
+
+                                                <label htmlFor="intervention-location">
+                                                    Lieu de l'intervention *
+                                                </label>
+
+                                                <input
+                                                    id="intervention-location"
+                                                    type="text"
+                                                    name="location"
+                                                    required
+                                                    maxLength="255"
+                                                    placeholder="Ville, quartier, établissement..."
+                                                />
+
+                                            </div>
+
+
+                                            {/* Besoin */}
+                                            <div className="intervention-field intervention-field-full">
+
+                                                <label htmlFor="intervention-need">
+                                                    Besoin / situation *
+                                                </label>
+
+                                                <textarea
+                                                    id="intervention-need"
+                                                    name="need"
+                                                    required
+                                                    maxLength="10000"
+                                                    rows="5"
+                                                    placeholder="Expliquez l'intervention souhaitée et le contexte..."
+                                                />
+
+                                            </div>
+
+
+                                            {/* Public */}
+                                            <div className="intervention-field">
+
+                                                <label htmlFor="target-audience">
+                                                    Public concerné *
+                                                </label>
+
+                                                <input
+                                                    id="target-audience"
+                                                    type="text"
+                                                    name="target_audience"
+                                                    required
+                                                    maxLength="255"
+                                                    placeholder="Ex. Adolescents de 14 à 18 ans"
+                                                />
+
+                                            </div>
+
+
+                                            {/* Participants */}
+                                            <div className="intervention-field">
+
+                                                <label htmlFor="estimated-participants">
+                                                    Nombre approximatif
+                                                </label>
+
+                                                <input
+                                                    id="estimated-participants"
+                                                    type="number"
+                                                    name="estimated_participants"
+                                                    min="1"
+                                                    max="1000000"
+                                                    placeholder="Ex. 50"
+                                                />
+
+                                            </div>
+
+
+                                            {/* Période */}
+                                            <div className="intervention-field intervention-field-full">
+
+                                                <label htmlFor="desired-period">
+                                                    Période souhaitée
+                                                </label>
+
+                                                <input
+                                                    id="desired-period"
+                                                    type="text"
+                                                    name="desired_period"
+                                                    maxLength="255"
+                                                    placeholder="Ex. Novembre 2026, semaine du 10 novembre..."
+                                                />
+
+                                            </div>
+
+                                        </div>
+
+
+                                        {/* Format */}
+                                        <div className="intervention-format">
+
+                                            <p className="intervention-format-title">
+                                                Type d'intervention *
+                                            </p>
+
+                                            <div className="intervention-radio-group">
+
+                                                <label>
+                                                    <input
+                                                        type="radio"
+                                                        name="intervention_format"
+                                                        value="ponctuelle"
+                                                        checked={interventionFormat === "ponctuelle"}
+                                                        onChange={(e) =>
+                                                            setInterventionFormat(e.target.value)
+                                                        }
+                                                    />
+
+                                                    <span>
+                                                        Intervention ponctuelle
+                                                    </span>
+                                                </label>
+
+
+                                                <label>
+                                                    <input
+                                                        type="radio"
+                                                        name="intervention_format"
+                                                        value="duree"
+                                                        checked={interventionFormat === "duree"}
+                                                        onChange={(e) =>
+                                                            setInterventionFormat(e.target.value)
+                                                        }
+                                                    />
+
+                                                    <span>
+                                                        Intervention sur une durée
+                                                    </span>
+                                                </label>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        {/* Durée conditionnelle */}
+                                        {interventionFormat === "duree" && (
+
+                                            <div className="intervention-field intervention-duration">
+
+                                                <label htmlFor="intervention-duration">
+                                                    Durée souhaitée *
+                                                </label>
+
+                                                <input
+                                                    id="intervention-duration"
+                                                    type="text"
+                                                    name="duration"
+                                                    required
+                                                    maxLength="255"
+                                                    placeholder="Ex. 3 jours, 4 semaines..."
+                                                />
+
+                                            </div>
+
+                                        )}
+
+
+                                        {/* Informations complémentaires */}
+                                        <div className="intervention-field intervention-additional">
+
+                                            <label htmlFor="additional-information">
+                                                Informations complémentaires
+                                            </label>
+
+                                            <textarea
+                                                id="additional-information"
+                                                name="additional_information"
+                                                rows="4"
+                                                maxLength="10000"
+                                                placeholder="Ajoutez toute information utile..."
+                                            />
+
+                                        </div>
+
+
+                                        {/* Erreur */}
+                                        {interventionError && (
+                                            <div className="intervention-message intervention-message-error">
+                                                {interventionError}
+                                            </div>
+                                        )}
+
+
+                                        {/* Succès */}
+                                        {interventionSuccess && (
+                                            <div className="intervention-message intervention-message-success">
+                                                ✓ {interventionSuccess}
+                                            </div>
+                                        )}
+
+
+                                        <div className="intervention-submit-wrapper">
+
+                                            <button
+                                                type="submit"
+                                                className="intervention-submit-button"
+                                                disabled={interventionSubmitting}
+                                            >
+                                                {interventionSubmitting
+                                                    ? "Envoi en cours..."
+                                                    : "Envoyer ma demande"}
+                                            </button>
+
+                                        </div>
+
+                                    </form>
 
                                 </div>
 
-                            </div>
+                            </section>
 
-
-                            {/* Durée conditionnelle */}
-                            {interventionFormat === "duree" && (
-
-                                <div className="intervention-field intervention-duration">
-
-                                    <label htmlFor="intervention-duration">
-                                        Durée souhaitée *
-                                    </label>
-
-                                    <input
-                                        id="intervention-duration"
-                                        type="text"
-                                        name="duration"
-                                        required
-                                        maxLength="255"
-                                        placeholder="Ex. 3 jours, 4 semaines..."
-                                    />
-
-                                </div>
-
-                            )}
-
-
-                            {/* Informations complémentaires */}
-                            <div className="intervention-field intervention-additional">
-
-                                <label htmlFor="additional-information">
-                                    Informations complémentaires
-                                </label>
-
-                                <textarea
-                                    id="additional-information"
-                                    name="additional_information"
-                                    rows="4"
-                                    maxLength="10000"
-                                    placeholder="Ajoutez toute information utile..."
-                                />
-
-                            </div>
-
-
-                            {/* Erreur */}
-                            {interventionError && (
-                                <div className="intervention-message intervention-message-error">
-                                    {interventionError}
-                                </div>
-                            )}
-
-
-                            {/* Succès */}
-                            {interventionSuccess && (
-                                <div className="intervention-message intervention-message-success">
-                                    ✓ {interventionSuccess}
-                                </div>
-                            )}
-
-
-                            <div className="intervention-submit-wrapper">
-
-                                <button
-                                    type="submit"
-                                    className="intervention-submit-button"
-                                    disabled={interventionSubmitting}
-                                >
-                                    {interventionSubmitting
-                                        ? "Envoi en cours..."
-                                        : "Envoyer ma demande"}
-                                </button>
-
-                            </div>
-
-                        </form>
-
+                        </div>
                     </div>
-
-                </section>
+                </div>
             )}
 
 
@@ -1697,11 +1875,7 @@ export default function CallToActionPage() {
                     <button
                         type="button"
                         className="cta-support-button"
-                        onClick={() => {
-                            setShowVolunteerForm((previous) => !previous);
-                            setVolunteerSuccess("");
-                            setVolunteerError("");
-                        }}
+                        onClick={openVolunteerModal}
                     >
                         <Gift size={18} />
 
@@ -1713,9 +1887,7 @@ export default function CallToActionPage() {
                     <button
                         type="button"
                         className="cta-support-button"
-                        onClick={() => {
-                            setShowDonationSection((previous) => !previous);
-                        }}
+                        onClick={openDonationModal}
                     >
                         Faire un don
                         <ArrowRight size={18} />
@@ -1724,13 +1896,48 @@ export default function CallToActionPage() {
                 </div>
 
             </section>
-            {showVolunteerForm && (
+           {showVolunteerForm && (
+    <div
+        className="cta-modal-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="volunteer-modal-title"
+        onMouseDown={(e) => {
+            if (e.target === e.currentTarget) {
+                setShowVolunteerForm(false);
+            }
+        }}
+    >
+        <div className="cta-modal">
+
+            <div className="cta-modal-topbar">
+                <div>
+                    <span className="cta-modal-eyebrow">
+                        REJOINDRE YOULIDA
+                    </span>
+
+                    <h2 id="volunteer-modal-title">
+                        Devenir bénévole
+                    </h2>
+                </div>
+
+                <button
+                    type="button"
+                    className="cta-modal-close"
+                    onClick={() => setShowVolunteerForm(false)}
+                    aria-label="Fermer le formulaire"
+                >
+                    <X size={24} />
+                </button>
+            </div>
+
+            <div className="cta-modal-body">
+
                 <section className="volunteer-form-section">
 
                     <div className="volunteer-form-container">
 
                         <div className="volunteer-form-header">
-
                             <span className="cta-section-label">
                                 REJOINDRE YOULIDA
                             </span>
@@ -1744,7 +1951,6 @@ export default function CallToActionPage() {
                                 ou votre expérience au service des actions de YOULIDA ?
                                 Présentez-vous en quelques mots.
                             </p>
-
                         </div>
 
                         {volunteerSuccess && (
@@ -1881,14 +2087,56 @@ export default function CallToActionPage() {
                     </div>
 
                 </section>
-            )}
 
-            {showDonationSection && (
-               <section
-    id="don"
-    className="donation-section"
->
-    <div className="donation-container">
+            </div>
+        </div>
+    </div>
+)}
+
+
+
+           {showDonationSection && (
+    <div
+        className="cta-modal-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="donation-modal-title"
+        onMouseDown={(e) => {
+            if (e.target === e.currentTarget) {
+                setShowDonationSection(false);
+            }
+        }}
+    >
+        <div className="cta-modal cta-modal-small">
+
+            <div className="cta-modal-topbar">
+                <div>
+                    <span className="cta-modal-eyebrow">
+                        SOUTENIR YOULIDA
+                    </span>
+
+                    <h2 id="donation-modal-title">
+                        Faire un don
+                    </h2>
+                </div>
+
+                <button
+                    type="button"
+                    className="cta-modal-close"
+                    onClick={() => setShowDonationSection(false)}
+                    aria-label="Fermer"
+                >
+                    <X size={24} />
+                </button>
+            </div>
+
+            <div className="cta-modal-body">
+
+                <section
+                    id="don"
+                    className="donation-section"
+                >
+                    <div className="donation-container">
 
                         <div className="donation-header">
 
@@ -1952,9 +2200,12 @@ export default function CallToActionPage() {
                         </p>
 
                     </div>
-
                 </section>
-            )}
+
+            </div>
+        </div>
+    </div>
+)}
 
             {/* =========================
           MESSAGE FINAL

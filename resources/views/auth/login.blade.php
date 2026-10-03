@@ -50,11 +50,13 @@
                 </a>
             </div>
 
-            <div class="text-center mt-2">
-                <a href="{{ route('register') }}">
-                    Créer un compte
-                </a>
-            </div>
+            @if (Route::has('register'))
+                <div class="text-center mt-2">
+                    <a href="{{ route('register') }}">
+                        Créer un compte
+                    </a>
+                </div>
+            @endif
 
         </form>
 

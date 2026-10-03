@@ -316,15 +316,30 @@ const SiteFooter = () => {
                 {/* ==========================================
             COPYRIGHT
         =========================================== */}
+                {/* ==========================================
+    COPYRIGHT
+=========================================== */}
                 <div className={styles.copyright}>
 
                     <p>
-                        &copy; {new Date().getFullYear()} YOULIDA.
-                        Tous droits réservés.
+                        &copy; {new Date().getFullYear()} YOULIDA. Tous droits réservés.
+                        {" "}
+                        <span className={styles.separator}>|</span>
+                        {" "}
+                        Développé par{" "}
+
+                        <a
+                            href="https://eunital.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.eunitalLink}
+                            title="Visiter le site officiel de EUNITAL"
+                        >
+                            EUNITAL
+                        </a>
                     </p>
 
                 </div>
-
             </div>
 
         </footer>
