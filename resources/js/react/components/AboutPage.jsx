@@ -40,7 +40,7 @@ export default function AboutPage() {
                 {hero.title || "À propos de YOULIDA"}
               </h1>
               <p className={styles.heroSubtitle}>
-                {hero.subtitle || "Young Leader's Initiatives for Development of sub-Saharan Africa"}
+                {hero.subtitle || "Young Leader's Initiatives for Development of Africa"}
               </p>
               {hero.description && (
                 <p className={styles.heroDescription}>{hero.description}</p>
@@ -83,7 +83,7 @@ export default function AboutPage() {
                   ) : (
                     <>
                       <p className={styles.cardText}>
-                        Engager les jeunes africains à être des acteurs de changement pour eux-mêmes et leurs communautés.
+                        Engager les jeunes africains à être des acteurs de changement pour eux-mêmes et pour leurs communautés.
                       </p>
                       <p className={styles.cardText}>
                         Nous croyons en un avenir où chaque jeune africain a les connaissances, les compétences et la
@@ -155,12 +155,12 @@ export default function AboutPage() {
                   <div className={styles.valueCard}>
                     <div className={styles.valueIcon}><Users className={styles.valueSvg} /></div>
                     <h3 className={styles.valueTitle}>Inclusion</h3>
-                    <p className={styles.valueDescription}>Nous créons des espaces sûrs où tous les jeunes sont les bienvenus.</p>
+                    <p className={styles.valueDescription}>Nous créons des espaces sûrs où tous les adolescent(e)s et jeunes sont écoutés et accompagnés sans distinction.</p>
                   </div>
                   <div className={styles.valueCard}>
                     <div className={styles.valueIcon}><Lightbulb className={styles.valueSvg} /></div>
                     <h3 className={styles.valueTitle}>Innovation</h3>
-                    <p className={styles.valueDescription}>Nous développons des solutions créatives adaptées aux réalités africaines.</p>
+                    <p className={styles.valueDescription}>Nous développons des solutions créatives adaptées aux réalités des jeunes africains.</p>
                   </div>
                   <div className={styles.valueCard}>
                     <div className={styles.valueIcon}><Target className={styles.valueSvg} /></div>
